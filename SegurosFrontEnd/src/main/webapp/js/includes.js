@@ -1,13 +1,13 @@
 const header = document.getElementById('header');
 const footer = document.getElementById('footer')
 
-fetch('/GuiaDB/presentation/includes/Header.html')
+fetch('/SegurosFrontEnd/presentation/includes/Header.html')
         .then(response => response.text())
         .then(data =>{
         header.innerHTML = data;
 });
 
-fetch('/GuiaDB/presentation/includes/Footer.html')
+fetch('/SegurosFrontEnd/presentation/includes/Footer.html')
         .then(response => response.text())
         .then(data =>{
         footer.innerHTML = data;
