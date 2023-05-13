@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
+:root{
+    --blanco : #FFFFFF;
+    --celeste_claro : #e4f2fd;
+    --azul: #7476ca;
+    --p : #6d7f88;
+    --fondo_login : #f1f1f1;
+    --fondo_icons: #bcbcc0;
+    --fondo_boton: #18a2b7;
+}
+
+html{
+    position: relative;
+     box-sizing: border-box;
+     min-height: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+/* Estilo para la ventana modal */
+#modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+

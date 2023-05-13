@@ -1,0 +1,31 @@
+/* Estilos personalizados */
+.header-logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #e50914;
+}
+.header-nav {
+    color: #e50914;
+}
+.card {
+    background-color: #282831;
+    border: none;
+}
+.card-title {
+    color: #fff;
+}
+.card-text {
+    color: #c1c1c1;
+}
+.btn-primary {
+    background-color: #e50914;
+    border-color: #e50914;
+}
+.btn-primary:hover {
+    background-color: #d7000f;
+    border-color: #d7000f;
+}
+footer {
+    background-color: #1f1f28;
+    color: #c1c1c1;
+}
