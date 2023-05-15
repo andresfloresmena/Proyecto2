@@ -15,7 +15,7 @@ import com.proyecto.segurosbackend.logic.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-@Path("/login")
+@Path("")
 
 public class Login {
 

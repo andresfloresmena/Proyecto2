@@ -13,7 +13,7 @@ import java.util.Objects;
  *
  * @author Escinf
  */
-public class Cliente {
+public class Cliente implements java.io.Serializable {
     String cedula;
     String nombre;
     Usuario usuario;
