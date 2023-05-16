@@ -171,6 +171,7 @@ async function actualizarDatosCliente() {
         }
         let data = await response.json();
         console.log('Datos del cliente actualizados:', data);
+        setUserData(cliente.usuario);
         obtenerDatosCliente();
     } catch (error) {
         console.error('Error:', error);
