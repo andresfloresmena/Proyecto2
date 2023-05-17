@@ -8,6 +8,7 @@ package com.proyecto.segurosbackend.resources;
  *
  * @author jimmy
  */
+import com.proyecto.segurosbackend.logic.Cliente;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import com.proyecto.segurosbackend.logic.Usuario;
@@ -19,15 +20,14 @@ import java.util.Map;
 @Path("/login")
 @PermitAll
 public class Login {
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario login(Usuario usuario) {
+    public Cliente login(Usuario usuario) {
         Map<String, String> errores = validar(usuario);
         if (errores.isEmpty()) {
             try {
-                Usuario real = Service.instance().usuarioFind(usuario.getCedula(), usuario.getClave());
+                Cliente real = Service.instance().usuarioFind(usuario.getCedula(), usuario.getClave());
                 if (real != null) {
                     return real;
                 } else {

@@ -29,8 +29,8 @@
                         </a>
                     </li>
 
-                    <li class="relative">
-                        <a href="/SegurosFrontEnd/presentation/cliente/polizas/show" class="hover:text-blue-700 font-bold">
+                    <li id="polizasElement" class="relative">
+                        <a href="/SegurosFrontEnd/presentation/cliente/polizas/View.html" class="hover:text-blue-700 font-bold">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-fill inline-block mr-1" viewBox="0 0 16 16">
                                 <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4.414a1 1 0 0 0-.293-.707L10.586 1H2zm2 1h6v1H4V2zm0 2h8v1H4V4zm0 2h8v1H4V6zm0 2h8v1H4V8zm0 2h8v1H4v-1zm-2 2h10v1H2v-1zm0 2h10v1H2v-1z"/>
                             </svg>
@@ -40,7 +40,7 @@
                             <!--submenu -->
                         </ul>
                     </li>
-                    <li>
+                    <li id="datosElement">
                         <a href="/SegurosFrontEnd/presentation/cliente/datos/View.html" class="hover:text-blue-700 font-bold">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill inline-block mr-1" viewBox="0 0 16 16">
                                 <path d="M8 0a4 4 0 1 0 4 4 4 4 0 0 0-4-4zm0 7c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3zm0 1c2.21 0 4 1.343 4 3v1H4v-1c0-1.657 1.79-3 4-3zm6 1v1h1v2H1V9h1V8H1V6h1V5H1V3h14v3h-1V4h-1v2h1zm-3 5h2v1h-2v1h-1v-1H8v-1h2v-1h1v1z"/>
@@ -53,20 +53,22 @@
                     </li>
 
 
-                    <li>
-                        <a href="/SegurosFrontEnd/presentation/login/logout" class="hover:text-blue-700 font-bold">
+                    <li id="logoutElement">
+                        <button id="logout" onclick="logout()" class="hover:text-blue-700 font-bold">
+                            <a href="/SegurosFrontEnd/presentation/Index.html">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right inline-block mr-1" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M5.5 1a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm5.5 5a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0 0 1h8.5a.5.5 0 0 0 .5-.5zm-5-5A1.5 1.5 0 0 1 12 2.5v11a.5.5 0 0 1-1 0v-11A1.5 1.5 0 0 1 9.5 1h-8A1.5 1.5 0 0 0 0 2.5v11A1.5 1.5 0 0 0 1.5 15h8a1.5 1.5 0 0 0 1.5-1.5v-11A1.5 1.5 0 0 0 9.5 1h-8z"/>
                                 <path fill-rule="evenodd" d="M14.854 8.354a.5.5 0 0 0 0-.708L12.207 4H15.5a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 1 0V4.707l2.647 2.647zM3 7.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3.5A.5.5 0 0 1 3 7.5zm1 5a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0 0 1h1.5a.5.5 0 0 0 .5-.5z"/>
                             </svg>
                             Logout
-                        </a>
+                            </a>
+                        </button>
                         <ul class="absolute top-full left-0 w-36  rounded-lg shadow-lg py-2 px-4 mt-1">
                             <!--submenu -->
                         </ul>
                     </li>
 
-                    <li>
+                    <li id="loginElement">
                         <button onclick="mostrarModal()" class="hover:text-blue-700 font-bold">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill inline-block mr-1" viewBox="0 0 16 16">
                                 <path d="M7 1h2v2H7V1zm2 2h2v2H9V3zm2-2h2v2h-2V1zm-1 10h3V5H5v8h3v-1H6V6h6v5h-1v1zm2-2h2v2h-2v-2zM1 9H0v2h2V9H1zm12-8H3v14h10V1h-2zm-3 7v3h-2V8h2zm-3 0v3H6V8h1zm-3 0v3H3V8h2zm-1-6h2v2H4V2zm9 0h-2v2h2V2z"/>
@@ -77,5 +79,6 @@
                 </ul>
             </div>
         </header>
+        <script src="/SegurosFrontEnd/js/methods.js"></script>
     </body>
 </html>

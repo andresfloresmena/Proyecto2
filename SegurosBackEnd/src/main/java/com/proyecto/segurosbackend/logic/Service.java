@@ -54,14 +54,14 @@ public class Service {
        
     }
 
-    public Usuario usuarioFind(String cedula,String clave){
+    public Cliente usuarioFind(String cedula,String clave){
         try {
         // Obtenemos el objeto Usuario mediante la cédula ingresada
         Usuario usuario = usuarioDao.read(cedula);
         if(usuario != null) {
             // Verificamos que la clave ingresada sea igual a la clave almacenada en el objeto Usuario
             if(clave.equals(usuario.getClave())) {
-                return usuario;
+                return clienteFind(usuario);
             } else {
                 // Si las claves no coinciden, devolvemos null
                 return null;

@@ -15,13 +15,29 @@ function setUserData(userData) {
 // Obtener los datos del usuario al cargar la página
 let userGlobal = getUserData() || {
     cedula: '',
-    clave: '',
     nombre: '',
-    telefono: '',
-    correo: '',
-    datos_tarjeta: '',
-    tipo: ''
+    usuario: {
+        cedula: '',
+        clave: '',
+        nombre: '',
+        telefono: '',
+        correo: '',
+        datos_tarjeta: '',
+        tipo: ''
+    },
+    polizas: []
 };
+
+let poliza = {
+    idPoliza: '',
+    placa: '',
+    fechaInicio: '',
+    plazoPago: '',
+    auto: '',
+    annio:'',
+    costoTotal: ''
+};
+
 async function registrar() {
     let id = document.getElementById("id").value;
     let clave = document.getElementById("clave").value;
@@ -36,7 +52,8 @@ async function registrar() {
         telefono: telefono,
         correo: correo,
         datos_tarjeta: datos_tarjeta,
-        tipo: 1
+        tipo: 1,
+        polizas: null
     };
     let cliente = {
         cedula: id,
@@ -81,10 +98,11 @@ async function login() {
             userGlobal = await response.json();
             setUserData(userGlobal);
             // Verificar el tipo de usuario y realizar alguna acción correspondiente
-            switch (userGlobal.tipo) {
+            switch (userGlobal.usuario.tipo) {
                 case 1:
                     const paginaPolizas = '/SegurosFrontEnd/presentation/cliente/polizas/View.html';
                     // Redireccionar a la página correspondiente
+                    obtenerPolizas();
                     window.location.href = paginaPolizas;
                     console.log('Inicio de sesión exitoso - Tipo 1');
                     break;
@@ -99,42 +117,47 @@ async function login() {
             // Autenticación fallida, mostrar algún mensaje de error
             console.error('Error en el inicio de sesión');
         }
+        
     } catch (error) {
 // Error en la solicitud o en la lógica de autenticación
         console.error('Error en la solicitud:', error);
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    /*const polizas = <%= new Gson().toJson(polizas) %>; // Obtener los datos de las polizas desde el backend (reemplaza esta línea)
-     
-     const tableBody = document.getElementById('polizasTableBody');
-     let tableHtml = '';
-     polizas.forEach(poliza => {
-     tableHtml += `
-     <tr>
-     <td class="border border-gray-300 px-4 py-2">${poliza.numero}</td>
-     <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
-     <td class="border border-gray-300 px-4 py-2">${poliza.fecha}</td>
-     <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
-     <td class="border border-gray-300 px-4 py-2"><img src="presentation/cliente/poliza/getImagen?id=${poliza.id}" alt="${poliza.id}" style="width: 50px; height: 50px;"></td>
-     <td class="border border-gray-300 px-4 py-2">₡${poliza.valor}</td>
-     </tr>
-     `;
-     });
-     
-     tableBody.innerHTML = tableHtml;*/
-});
-// Función para obtener los datos del cliente y mostrarlos en los campos de entrada
-function obtenerDatosCliente() {
+async function obtenerPolizas() {
     try {
-        document.getElementById('nombreFld').value = userGlobal.nombre;
-        document.getElementById('telefono').value = userGlobal.telefono;
-        document.getElementById('correo').value = userGlobal.correo;
-        document.getElementById('tarjeta').value = userGlobal.datos_tarjeta;
-        document.getElementById('clave').value = userGlobal.clave;
+        const request = await fetch(`${backend}/polizas`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userGlobal)
+        });
+        
+        const response = await fetch(request);
+        console.log(response);
+        poliza = await response.json();
+        // Aquí puedes realizar las acciones necesarias con los datos de respuesta
+        // como actualizar el contenido de la tabla utilizando innerHTML
+        userGlobal.polizas.push(poliza);
+        
+        const tableBody = document.getElementById('polizasTableBody');
+        let tableHtml = '';
+
+        userGlobal.polizas.forEach(poliza => {
+            tableHtml += `
+            <tr>
+                <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
+                <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
+                <td class="border border-gray-300 px-4 py-2">${poliza.fechaInicio}</td>
+                <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
+                <td class="border border-gray-300 px-4 py-2"><img src="presentation/cliente/poliza/getImagen?id=${poliza.idPoliza}" alt="${poliza.idPoliza}" style="width: 50px; height: 50px;"></td>
+                <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
+            </tr>
+        `;
+        });
+
+        tableBody.innerHTML = tableHtml;
     } catch (error) {
-        console.error('Error en la solicitud:', error);
+        console.error('Error al obtener las pólizas:', error);
     }
 }
 
@@ -151,11 +174,13 @@ async function actualizarDatosCliente() {
         usuario: {
             cedula: userGlobal.cedula,
             clave: clave,
+            nombre: nombre,
             telefono: telefono,
             correo: correo,
             datos_tarjeta: tarjeta
         }
     };
+    setUserData(cliente);
     let request = new Request(`${backend}/actualizarDatosCliente`, {
         method: 'POST',
         headers: {
@@ -171,17 +196,54 @@ async function actualizarDatosCliente() {
         }
         let data = await response.json();
         console.log('Datos del cliente actualizados:', data);
-        setUserData(cliente.usuario);
         obtenerDatosCliente();
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
+function obtenerDatosCliente() {
+    try {
+        document.getElementById('nombreFld').value = userGlobal.nombre;
+        document.getElementById('telefono').value = userGlobal.usuario.telefono;
+        document.getElementById('correo').value = userGlobal.usuario.correo;
+        document.getElementById('tarjeta').value = userGlobal.usuario.datos_tarjeta;
+        document.getElementById('clave').value = userGlobal.usuario.clave;
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    }
+}
+;
+
+function ocultarElementosHeader() {
+    const datosElement = document.getElementById('datosElement');
+    const polizasElement = document.getElementById('polizasElement');
+    const logoutElement = document.getElementById('logoutElement');
+    const loginElement = document.getElementById('loginElement');
+
+
+    if (userGlobal.nombre === '') {
+        datosElement.style.display = 'none'; // Ocultar el elemento de datos
+        polizasElement.style.display = 'none'; // Ocultar el elemento de polizas
+        logoutElement.style.display = 'none';
+    } else {
+        loginElement.style.display = 'none';
+    }
+}
+
+function logout() {
+    localStorage.clear();
+    userGlobal = {}; // Limpiar los datos en userGlobal
+    ocultarElementosHeader();
+}
+
 function loaded() {
-    obtenerDatosCliente();
-    document.getElementById('login').addEventListener('click', e => login());
+
     document.getElementById('registrar').addEventListener('click', e => registrar());
 }
 
 document.addEventListener("DOMContentLoaded", loaded);
+document.addEventListener('DOMContentLoaded', () => {
+    obtenerDatosCliente();
+    ocultarElementosHeader();
+});

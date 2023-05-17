@@ -21,6 +21,7 @@ public class Cliente implements java.io.Serializable {
 
     public Cliente() {
         this("","",new Usuario());
+        polizas = new ArrayList();
     }
 
     public Cliente(String cedula, String nombre, Usuario usuario) {
