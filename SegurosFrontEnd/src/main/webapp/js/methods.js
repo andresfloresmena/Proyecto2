@@ -29,13 +29,16 @@ let userGlobal = getUserData() || {
 };
 
 let poliza = {
-    idPoliza: '',
+    idPoliza: 0,
     placa: '',
-    fechaInicio: '',
+    fechaInicio: new Date(),
     plazoPago: '',
     auto: '',
-    annio:'',
-    costoTotal: ''
+    annio: '',
+    costoTotal: 0,
+    cliente: null,
+    cobertura: [],
+    idPolizaModelo: 0
 };
 
 async function registrar() {
@@ -102,7 +105,6 @@ async function login() {
                 case 1:
                     const paginaPolizas = '/SegurosFrontEnd/presentation/cliente/polizas/View.html';
                     // Redireccionar a la página correspondiente
-                    obtenerPolizas();
                     window.location.href = paginaPolizas;
                     console.log('Inicio de sesión exitoso - Tipo 1');
                     break;
@@ -117,7 +119,7 @@ async function login() {
             // Autenticación fallida, mostrar algún mensaje de error
             console.error('Error en el inicio de sesión');
         }
-        
+
     } catch (error) {
 // Error en la solicitud o en la lógica de autenticación
         console.error('Error en la solicitud:', error);
@@ -126,37 +128,41 @@ async function login() {
 
 async function obtenerPolizas() {
     try {
-        const request = await fetch(`${backend}/polizas`, {
-            method: 'GET',
+        const response = await fetch(`${backend}/polizas`, {
+            method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(userGlobal)
         });
-        
-        const response = await fetch(request);
-        console.log(response);
-        poliza = await response.json();
-        // Aquí puedes realizar las acciones necesarias con los datos de respuesta
-        // como actualizar el contenido de la tabla utilizando innerHTML
-        userGlobal.polizas.push(poliza);
-        
-        const tableBody = document.getElementById('polizasTableBody');
-        let tableHtml = '';
 
-        userGlobal.polizas.forEach(poliza => {
-            tableHtml += `
-            <tr>
-                <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
-                <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
-                <td class="border border-gray-300 px-4 py-2">${poliza.fechaInicio}</td>
-                <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
-                <td class="border border-gray-300 px-4 py-2"><img src="presentation/cliente/poliza/getImagen?id=${poliza.idPoliza}" alt="${poliza.idPoliza}" style="width: 50px; height: 50px;"></td>
-                <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
-            </tr>
-        `;
-        });
+        if (response.ok) {
+            polizas = await response.json();
+            // Aquí puedes realizar las acciones necesarias con los datos de respuesta
+            // como actualizar el contenido de la tabla utilizando innerHTML
+            userGlobal.polizas.push(...polizas); // Agregar las nuevas pólizas al array existente
 
-        tableBody.innerHTML = tableHtml;
+            const tableBody = document.getElementById('polizasTableBody');
+            let tableHtml = '';
+
+            polizas.forEach(poliza => {
+                tableHtml += `
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.fechaInicio}</td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
+                    <td class="border border-gray-300 px-4 py-2"><img src="presentation/cliente/poliza/getImagen?id=${poliza.idPoliza}" alt="${poliza.idPoliza}" style="width: 50px; height: 50px;"></td>
+                    <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
+                </tr>
+            `;
+            });
+
+            tableBody.innerHTML = tableHtml;
+        } else {
+            // Error en la respuesta del servidor
+            console.error('Error al obtener las pólizas:', response.status);
+        }
     } catch (error) {
+        // Error en la solicitud o en la lógica de obtener las pólizas
         console.error('Error al obtener las pólizas:', error);
     }
 }
@@ -238,12 +244,15 @@ function logout() {
 }
 
 function loaded() {
-
     document.getElementById('registrar').addEventListener('click', e => registrar());
+
+    obtenerDatosCliente();
+    ocultarElementosHeader();
 }
 
 document.addEventListener("DOMContentLoaded", loaded);
-document.addEventListener('DOMContentLoaded', () => {
-    obtenerDatosCliente();
-    ocultarElementosHeader();
+
+document.getElementById('obtenerPolizas').addEventListener('click', e => {
+    e.preventDefault(); // Evitar la recarga de la página
+    obtenerPolizas();
 });
