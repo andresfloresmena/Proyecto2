@@ -12,6 +12,7 @@ package com.proyecto.segurosbackend.logic;
  */
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Poliza {
@@ -48,6 +49,8 @@ public class Poliza {
    
     
     public Poliza(){
+        cliente = new Cliente();
+        cobertura = new ArrayList();
     }
 
     public int getIdPolizaModelo() {

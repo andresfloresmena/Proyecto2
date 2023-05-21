@@ -90,11 +90,10 @@ public class Service {
     }
     
     
-    public List<Poliza> polizaFind(Cliente cliente) throws Exception{
+    public Cliente polizaFind(Cliente cliente) throws Exception{
         List<Poliza> polizas = polizaDao.findByCliente(cliente.getCedula());
-        for(Poliza e:polizas) e.setCliente(cliente);
         cliente.setPolizas(polizas);
-        return polizas;
+        return cliente;
     }
 
     public void clienteUpdate(Cliente cliente) throws Exception{

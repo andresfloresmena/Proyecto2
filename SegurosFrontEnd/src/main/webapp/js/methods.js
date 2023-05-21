@@ -28,19 +28,6 @@ let userGlobal = getUserData() || {
     polizas: []
 };
 
-let poliza = {
-    idPoliza: 0,
-    placa: '',
-    fechaInicio: new Date(),
-    plazoPago: '',
-    auto: '',
-    annio: '',
-    costoTotal: 0,
-    cliente: null,
-    cobertura: [],
-    idPolizaModelo: 0
-};
-
 async function registrar() {
     let id = document.getElementById("id").value;
     let clave = document.getElementById("clave").value;
@@ -135,15 +122,15 @@ async function obtenerPolizas() {
         });
 
         if (response.ok) {
-            polizas = await response.json();
+            userGlobal = await response.json();
             // Aquí puedes realizar las acciones necesarias con los datos de respuesta
             // como actualizar el contenido de la tabla utilizando innerHTML
-            userGlobal.polizas.push(...polizas); // Agregar las nuevas pólizas al array existente
+       
 
             const tableBody = document.getElementById('polizasTableBody');
             let tableHtml = '';
 
-            polizas.forEach(poliza => {
+            userGlobal.polizas.forEach(poliza => {
                 tableHtml += `
                 <tr>
                     <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
@@ -245,14 +232,9 @@ function logout() {
 
 function loaded() {
     document.getElementById('registrar').addEventListener('click', e => registrar());
-
-    obtenerDatosCliente();
     ocultarElementosHeader();
 }
 
 document.addEventListener("DOMContentLoaded", loaded);
-
-document.getElementById('obtenerPolizas').addEventListener('click', e => {
-    e.preventDefault(); // Evitar la recarga de la página
-    obtenerPolizas();
-});
+document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
+document.addEventListener('DOMContentLoaded', obtenerPolizas);

@@ -28,8 +28,7 @@ public class Polizas {
     public Response obtenerPolizas(Cliente cliente) {
         try {
             // Obtener las pólizas desde el servicio
-            List<Poliza> polizas = Service.instance().polizaFind(cliente);
-            return Response.ok(polizas).build();
+            return Response.ok( Service.instance().polizaFind(cliente)).build();
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las pólizas
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
