@@ -168,6 +168,7 @@ async function obtenerPolizasPorPlaca(event, placa) {
     event.preventDefault(); // Esta línea evita la acción por defecto
 
     try {
+        const cedula = userGlobal.cedula;
         
         const response = await fetch(`${backend}/polizas/findPoliza?placa=${encodeURIComponent(placa)}&cedula=${encodeURIComponent(cedula)}`, {
             method: 'GET',
@@ -250,7 +251,7 @@ async function obtenerPolizasYCoberturas() {
                         <tr>
                             <td class="border px-4 py-2">${coverage.descripcion}</td>
                             <td class="border px-4 py-2">₡${coverage.costoMinimo}</td>
-                            <td class="border px-4 py-2">${coverage.costoPorcentual}</td>
+                            <td class="border px-4 py-2">${coverage.costoPorcentual}%</td>
                         </tr>
                     `;
             });

@@ -5,7 +5,6 @@
 package com.proyecto.segurosbackend.resources;
 
 import com.proyecto.segurosbackend.logic.Cliente;
-import com.proyecto.segurosbackend.logic.Poliza;
 import com.proyecto.segurosbackend.logic.Service;
 import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.Consumes;
@@ -19,7 +18,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 /**
  *
@@ -72,8 +70,6 @@ public class Polizas {
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerPolizaCobertura(@QueryParam("idPoliza") String idPoliza) {
         try {
-           
-          
             return Response.ok(Service.instance().coberturaPoliza( Integer.parseInt(idPoliza))).build();
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las pólizas
