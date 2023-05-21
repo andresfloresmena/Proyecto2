@@ -147,8 +147,8 @@ async function obtenerPolizas() {
                     <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
                     <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
                     <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
-                    <td class="border border-gray-300 px-4 py-2">${poliza.id_poliza_modelo}</td>
-                    <td class="border border-gray-300 px-4 py-2"> <i class="fas fa-eye"></i> </td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
+                    <td class="border border-gray-300 px-4 py-2"> <a onclick="obtenerPolizasYCoberturas()" href="/SegurosFrontEnd/presentation/cliente/polizas/Detalles.html?id=${poliza.idPoliza}"><i class="fas fa-eye"></i></a> </td>
                 </tr>
             `;
             });
@@ -190,8 +190,8 @@ async function obtenerPolizasPorPlaca(event, placa) {
                     <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
                     <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
                     <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
-                    <td class="border border-gray-300 px-4 py-2">${poliza.id_poliza_modelo}</td>
-                    <td class="border border-gray-300 px-4 py-2"> <i class="fas fa-eye"></i> </td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
+                   <td class="border border-gray-300 px-4 py-2"> <a href="/SegurosFrontEnd/presentation/cliente/polizas/Detalles.html?id=${poliza.idPoliza}"><i class="fas fa-eye"></i></a> </td>
                 </tr>
             `;
             });
@@ -205,6 +205,65 @@ async function obtenerPolizasPorPlaca(event, placa) {
         // Error en la solicitud o en la lógica de obtener las pólizas
         console.error('Error al obtener las pólizas:', error);
     }
+}
+
+async function obtenerPolizasYCoberturas() {
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const idPoliza = urlParams.get('id');
+
+    try {
+        const cedula = userGlobal.cedula;
+        const policyResponse = await fetch(`${backend}/polizas/findUnaPoliza?idPoliza=${encodeURIComponent(idPoliza)}`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        if (policyResponse.ok) {
+            const policy = await policyResponse.json();
+            var policyInfo = document.getElementById('policy-info');
+            policyInfo.innerHTML = `
+                    <tr>
+                        <td class="border px-4 py-2">${policy.cliente.nombre}</td>
+                        <td class="border px-4 py-2">${policy.placa}</td>
+                        <td class="border px-4 py-2">${policy.plazoPago}</td>
+                        <td class="border px-4 py-2">${policy.auto}</td>
+                        <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${policy.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
+                        <td class="border px-4 py-2">${policy.annio}</td>
+                        <td class="border px-4 py-2">₡${policy.costoTotal}</td>
+                    </tr>
+                `;
+        } else {
+            console.error('Error al obtener la poliza:', policyResponse.status);
+        }
+
+        const coverageResponse = await fetch(`${backend}/polizas/PolizaCobertura?idPoliza=${encodeURIComponent(idPoliza)}`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        if (coverageResponse.ok) {
+            const coverages = await coverageResponse.json();
+            var coverageInfo = document.getElementById('coverage-info');
+            coverages.forEach(function (coverage) {
+                coverageInfo.innerHTML += `
+                        <tr>
+                            <td class="border px-4 py-2">${coverage.descripcion}</td>
+                            <td class="border px-4 py-2">₡${coverage.costoMinimo}</td>
+                            <td class="border px-4 py-2">${coverage.costoPorcentual}</td>
+                        </tr>
+                    `;
+            });
+        } else {
+            console.error('Error al obtener las coberturas:', coverageResponse.status);
+        }
+
+    } catch (error) {
+        // Error en la solicitud o en la lógica de obtener las pólizas y coberturas
+        console.error('Error al obtener la poliza y las coberturas:', error);
+    }
+
+
 }
 
 

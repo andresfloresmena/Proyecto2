@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tablas con TailwindCSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-5">
+        <h2 class="text-2xl font-bold mb-5">Información detallada de la poliza</h2>
+        <table class="table-auto w-full mb-5">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 border">Nombre de Cliente</th>
+                    <th class="px-4 py-2 border">Placa</th>
+                    <th class="px-4 py-2 border">Plazo de Pago</th>
+                    <th class="px-4 py-2 border">Auto</th>
+                    <th class="px-4 py-2 border">Imagen</th>
+                    <th class="px-4 py-2 border">Año</th>
+                    <th class="px-4 py-2 border">Costo Total</th>
+                </tr>
+            </thead>
+            <tbody id="policy-info">
+            </tbody>
+        </table>
+
+        <h2 class="text-2xl font-bold mb-5">Coberturas de la poliza</h2>
+        <table class="table-auto w-full">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 border">Descripción</th>
+                    <th class="px-4 py-2 border">Costo Mínimo</th>
+                    <th class="px-4 py-2 border">Costo Porcentual</th>
+                </tr>
+            </thead>
+            <tbody id="coverage-info">
+            </tbody>
+        </table>
+
+        <a href="/cliente/polizas/View.html" class="inline-block mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Regresar</a>
+    </div>
+
+   
+
+</body>
+</html>

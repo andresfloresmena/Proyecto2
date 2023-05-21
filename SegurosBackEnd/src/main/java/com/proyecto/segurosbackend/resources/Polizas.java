@@ -46,11 +46,34 @@ public class Polizas {
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerPolizas(@QueryParam("placa") String placa, @QueryParam("cedula") String cedula) {
         try {
-            // Crear una instancia de cliente con la placa y cédula dadas
             
-
-            // Obtener las pólizas desde el servicio
             return Response.ok(Service.instance().polizaFindByPlaca(placa, cedula)).build();
+        } catch (Exception e) {
+            // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las pólizas
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/findUnaPoliza")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerUnaPoliza(@QueryParam("idPoliza") String id) {
+        try {
+            
+            return Response.ok(Service.instance().polizaFindById(id)).build();
+        } catch (Exception e) {
+            // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las pólizas
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/PolizaCobertura")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPolizaCobertura(@QueryParam("idPoliza") Integer idPoliza) {
+        try {
+          
+            return Response.ok(Service.instance().coberturaPoliza(idPoliza)).build();
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las pólizas
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
