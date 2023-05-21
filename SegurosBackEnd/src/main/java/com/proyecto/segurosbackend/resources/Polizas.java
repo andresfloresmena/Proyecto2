@@ -70,10 +70,11 @@ public class Polizas {
     @GET
     @Path("/PolizaCobertura")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerPolizaCobertura(@QueryParam("idPoliza") Integer idPoliza) {
+    public Response obtenerPolizaCobertura(@QueryParam("idPoliza") String idPoliza) {
         try {
+           
           
-            return Response.ok(Service.instance().coberturaPoliza(idPoliza)).build();
+            return Response.ok(Service.instance().coberturaPoliza( Integer.parseInt(idPoliza))).build();
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las pólizas
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

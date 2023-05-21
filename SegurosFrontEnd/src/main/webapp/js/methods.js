@@ -148,7 +148,7 @@ async function obtenerPolizas() {
                     <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
                     <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
-                    <td class="border border-gray-300 px-4 py-2"> <a onclick="obtenerPolizasYCoberturas()" href="/SegurosFrontEnd/presentation/cliente/polizas/Detalles.html?id=${poliza.idPoliza}"><i class="fas fa-eye"></i></a> </td>
+                    <td class="border border-gray-300 px-4 py-2"> <a href="/SegurosFrontEnd/presentation/cliente/polizas/Detalles.html?idPoliza=${poliza.idPoliza}"><i class="fas fa-eye"></i></a> </td>
                 </tr>
             `;
             });
@@ -168,7 +168,7 @@ async function obtenerPolizasPorPlaca(event, placa) {
     event.preventDefault(); // Esta línea evita la acción por defecto
 
     try {
-        const cedula = userGlobal.cedula;
+        
         const response = await fetch(`${backend}/polizas/findPoliza?placa=${encodeURIComponent(placa)}&cedula=${encodeURIComponent(cedula)}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
@@ -191,7 +191,7 @@ async function obtenerPolizasPorPlaca(event, placa) {
                     <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
                     <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
-                   <td class="border border-gray-300 px-4 py-2"> <a href="/SegurosFrontEnd/presentation/cliente/polizas/Detalles.html?id=${poliza.idPoliza}"><i class="fas fa-eye"></i></a> </td>
+                   <td class="border border-gray-300 px-4 py-2"> <a href="/SegurosFrontEnd/presentation/cliente/polizas/Detalles.html?idPoliza=${poliza.idPoliza}"><i class="fas fa-eye"></i></a> </td>
                 </tr>
             `;
             });
@@ -210,18 +210,18 @@ async function obtenerPolizasPorPlaca(event, placa) {
 async function obtenerPolizasYCoberturas() {
     
     const urlParams = new URLSearchParams(window.location.search);
-    const idPoliza = urlParams.get('id');
+    const idPoliza = urlParams.get('idPoliza');
 
     try {
-        const cedula = userGlobal.cedula;
-        const policyResponse = await fetch(`${backend}/polizas/findUnaPoliza?idPoliza=${encodeURIComponent(idPoliza)}`, {
+        
+        const response = await fetch(`${backend}/polizas/findUnaPoliza?idPoliza=${encodeURIComponent(idPoliza)}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         });
 
-        if (policyResponse.ok) {
-            const policy = await policyResponse.json();
-            var policyInfo = document.getElementById('policy-info');
+        if (response.ok) {
+            const policy = await response.json();
+            let policyInfo = document.getElementById('policy-info');
             policyInfo.innerHTML = `
                     <tr>
                         <td class="border px-4 py-2">${policy.cliente.nombre}</td>
@@ -234,7 +234,7 @@ async function obtenerPolizasYCoberturas() {
                     </tr>
                 `;
         } else {
-            console.error('Error al obtener la poliza:', policyResponse.status);
+            console.error('Error al obtener la poliza:', response.status);
         }
 
         const coverageResponse = await fetch(`${backend}/polizas/PolizaCobertura?idPoliza=${encodeURIComponent(idPoliza)}`, {
@@ -351,6 +351,7 @@ function loaded() {
 document.addEventListener("DOMContentLoaded", loaded);
 document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
 document.addEventListener('DOMContentLoaded', obtenerPolizas);
+document.addEventListener('DOMContentLoaded', obtenerPolizasYCoberturas);
 
 const form = document.getElementById('findPolizasForm'); // Asegúrate de reemplazar 'form-id' por el ID de tu formulario
 form.addEventListener('submit', (event) => obtenerPolizasPorPlaca(event, form.placa.value));
