@@ -6,6 +6,12 @@ function getUserData() {
     }
     return null;
 }
+var link = document.createElement("link");
+link.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
+link.rel = "stylesheet";
+
+// Luego, añades el elemento <link> al <head> del documento.
+document.head.appendChild(link);
 
 // Función para almacenar los datos del usuario en el almacenamiento local
 function setUserData(userData) {
@@ -125,20 +131,24 @@ async function obtenerPolizas() {
             userGlobal = await response.json();
             // Aquí puedes realizar las acciones necesarias con los datos de respuesta
             // como actualizar el contenido de la tabla utilizando innerHTML
-       
+
 
             const tableBody = document.getElementById('polizasTableBody');
             let tableHtml = '';
+            document.getElementById('placa').value = '';
 
             userGlobal.polizas.forEach(poliza => {
                 tableHtml += `
                 <tr>
+                    
                     <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.fechaInicio}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
-                    <td class="border border-gray-300 px-4 py-2"><img src="presentation/cliente/poliza/getImagen?id=${poliza.idPoliza}" alt="${poliza.idPoliza}" style="width: 50px; height: 50px;"></td>
+                    <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
                     <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.id_poliza_modelo}</td>
+                    <td class="border border-gray-300 px-4 py-2"> <i class="fas fa-eye"></i> </td>
                 </tr>
             `;
             });
@@ -153,6 +163,50 @@ async function obtenerPolizas() {
         console.error('Error al obtener las pólizas:', error);
     }
 }
+
+async function obtenerPolizasPorPlaca(event, placa) {
+    event.preventDefault(); // Esta línea evita la acción por defecto
+
+    try {
+        const cedula = userGlobal.cedula;
+        const response = await fetch(`${backend}/polizas/findPoliza?placa=${encodeURIComponent(placa)}&cedula=${encodeURIComponent(cedula)}`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        });
+
+
+        if (response.ok) {
+            const polizas = await response.json();
+
+            const tableBody = document.getElementById('polizasTableBody');
+            let tableHtml = '';
+
+            polizas.forEach(poliza => {
+                tableHtml += `
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.fechaInicio}</td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
+                    <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
+                    <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
+                    <td class="border border-gray-300 px-4 py-2">${poliza.id_poliza_modelo}</td>
+                    <td class="border border-gray-300 px-4 py-2"> <i class="fas fa-eye"></i> </td>
+                </tr>
+            `;
+            });
+
+            tableBody.innerHTML = tableHtml;
+        } else {
+            // Error en la respuesta del servidor
+            console.error('Error al obtener las pólizas:', response.status);
+        }
+    } catch (error) {
+        // Error en la solicitud o en la lógica de obtener las pólizas
+        console.error('Error al obtener las pólizas:', error);
+    }
+}
+
 
 // Función para actualizar los datos del cliente
 async function actualizarDatosCliente() {
@@ -238,3 +292,6 @@ function loaded() {
 document.addEventListener("DOMContentLoaded", loaded);
 document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
 document.addEventListener('DOMContentLoaded', obtenerPolizas);
+
+const form = document.getElementById('findPolizasForm'); // Asegúrate de reemplazar 'form-id' por el ID de tu formulario
+form.addEventListener('submit', (event) => obtenerPolizasPorPlaca(event, form.placa.value));

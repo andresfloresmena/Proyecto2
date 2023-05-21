@@ -5,9 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Polizas</title>
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-        <style>
-            /* Estilos personalizados aquí */
-        </style>
     </head>
     <body>
         <div id="header"></div>
@@ -15,14 +12,25 @@
         <div class="container mx-auto py-8">
             <div class="flex justify-between items-center">
                 <h1 class="text-3xl font-bold">Mis Polizas</h1>
-                <a href="presentation/cliente/poliza/show" class="flex items-center text-green-500 hover:text-green-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    Añadir Poliza
-                </a>
             </div>
-            <button class="btn btn-success btn-block">Buscar Polizas</button>
+            
+            
+            <form method="post" class="flex items-center" id="findPolizasForm">   
+                <label for="simple-search" class="sr-only">Placa</label>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    <input type="text" id="placa" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
+                </div>
+                <button type="submit" id="buscar" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Search
+                </button>
+                <button type="button" onclick="mostrarModalCrearPoliza()" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    Crear
+                </button>
+            </form>
+            
             <hr class="my-4">
             <div class="w-full">
                 <table class="w-full table-auto border border-gray-300">
@@ -34,12 +42,54 @@
                             <th class="border border-gray-300 px-4 py-2">Auto</th>
                             <th class="border border-gray-300 px-4 py-2">Imagen</th>
                             <th class="border border-gray-300 px-4 py-2">Valor</th>
+                            <th class="border border-gray-300 px-4 py-2">Modo-Pago</th>
+                            <th class="border border-gray-300 px-4 py-2">Ver</th>
                         </tr>
                     </thead>
                     <tbody id="polizasTableBody">
                         <!-- Aquí se generará dinámicamente el contenido de la tabla -->
                     </tbody>
                 </table>
+            </div>
+        </div>
+        
+         <!-- Modal: Pasarela de pago -->
+        <div id="modalCrearPoliza" class="fixed hidden z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <!-- Sobreposición de fondo -->
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+                <!-- Contenido del modal -->
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+
+                    <!-- Paso 1: Datos de la póliza -->
+                    <div id="step1" class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <h2 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Datos de la póliza</h2>
+                        <!-- Aquí tus inputs para los datos de la póliza -->
+                    </div>
+
+                    <!-- Paso 2: Tipo de cobertura -->
+                    <div id="step2" class="hidden bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <h2 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Tipo de cobertura</h2>
+                        <!-- Aquí tus inputs para el tipo de cobertura -->
+                    </div>
+
+                    <!-- Paso 3: Información de la póliza comprada -->
+                    <div id="step3" class="hidden bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <h2 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Información de la póliza comprada</h2>
+                        <!-- Aquí tus inputs para la información de la póliza comprada -->
+                    </div>
+
+                    <!-- Botones para navegar entre pasos -->
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button id="nextBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Siguiente
+                        </button>
+                        <button id="prevBtn" type="button" class="hidden w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Anterior
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </div>
         
