@@ -20,6 +20,7 @@ import java.util.Map;
 @Path("/login")
 @PermitAll
 public class Login {
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,18 +32,18 @@ public class Login {
                 if (real != null) {
                     return real;
                 } else {
-                    errores.put("cedulaFld", "Usuario o clave incorrectos");
-                    errores.put("claveFld", "Usuario o clave incorrectos");
+                    errores.put("identificacion", "Usuario o clave incorrectos");
+                    errores.put("clave", "Usuario o clave incorrectos");
                     return null;
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                errores.put("cedulaFld", "Usuario o clave incorrectos");
-                errores.put("claveFld", "Usuario o clave incorrectos");
-                
+                errores.put("identificacion", "Usuario o clave incorrectos");
+                errores.put("clave", "Usuario o clave incorrectos");
             }
         } else {
-            
+            errores.put("identificacion", "Usuario o clave incorrectos");
+            errores.put("clave", "Usuario o clave incorrectos");
         }
         return null;
     }
@@ -56,11 +57,11 @@ public class Login {
     Map<String, String> validar(Usuario usuario) {
         Map<String, String> errores = new HashMap<>();
         if (usuario.getCedula().isEmpty()) {
-            errores.put("cedulaFld", "Cedula requerida");
+            errores.put("identificacion", "Identificacion requerida");
         }
 
         if (usuario.getClave().isEmpty()) {
-            errores.put("claveFld", "Clave requerida");
+            errores.put("clave", "Clave requerida");
         }
         return errores;
     }

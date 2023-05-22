@@ -13,4 +13,3 @@ function closeModal() {
     // Ocultar el modal
     modal.classList.add("hidden");
 }
-

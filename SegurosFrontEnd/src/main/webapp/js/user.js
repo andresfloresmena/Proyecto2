@@ -111,11 +111,26 @@ async function login() {
         } else {
             // Autenticación fallida, mostrar algún mensaje de error
             console.error('Error en el inicio de sesión');
+            
+             // Agregar clases CSS para resaltar el error
+                
         }
 
     } catch (error) {
 // Error en la solicitud o en la lógica de autenticación
         console.error('Error en la solicitud:', error);
+        const identificacionInput = document.getElementById('identificacion');
+                const claveInput = document.getElementById('clave');
+                const errorMessage = document.createElement('p');
+
+                identificacionInput.classList.add('border-red-500');
+                claveInput.classList.add('border-red-500');
+
+                errorMessage.textContent = 'Identificacion o clave incorrectos. Intentelo de nuevo!';
+                errorMessage.classList.add('text-red-500', 'text-sm', 'mb-2');
+
+                const form = document.querySelector('form');
+                form.insertBefore(errorMessage, form.firstChild);
     }
 }
 
