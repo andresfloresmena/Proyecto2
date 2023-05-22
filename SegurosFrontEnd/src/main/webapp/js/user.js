@@ -90,6 +90,7 @@ async function login() {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(usuario)
         });
+        
         if (response.ok) {
             userGlobal = await response.json();
             setUserData(userGlobal);
@@ -108,29 +109,30 @@ async function login() {
                 default:
                     console.error('Tipo de usuario no válido');
             }
+            ocultarElementosHeader();
         } else {
             // Autenticación fallida, mostrar algún mensaje de error
             console.error('Error en el inicio de sesión');
-            
-             // Agregar clases CSS para resaltar el error
-                
+
+            // Agregar clases CSS para resaltar el error
+
         }
 
     } catch (error) {
 // Error en la solicitud o en la lógica de autenticación
         console.error('Error en la solicitud:', error);
         const identificacionInput = document.getElementById('identificacion');
-                const claveInput = document.getElementById('clave');
-                const errorMessage = document.createElement('p');
+        const claveInput = document.getElementById('clave');
+        const errorMessage = document.createElement('p');
 
-                identificacionInput.classList.add('border-red-500');
-                claveInput.classList.add('border-red-500');
+        identificacionInput.classList.add('border-red-500');
+        claveInput.classList.add('border-red-500');
 
-                errorMessage.textContent = 'Identificacion o clave incorrectos. Intentelo de nuevo!';
-                errorMessage.classList.add('text-red-500', 'text-sm', 'mb-2');
+        errorMessage.textContent = 'Identificacion o clave incorrectos. Intentelo de nuevo!';
+        errorMessage.classList.add('text-red-500', 'text-sm', 'mb-2');
 
-                const form = document.querySelector('form');
-                form.insertBefore(errorMessage, form.firstChild);
+        const form = document.querySelector('form');
+        form.insertBefore(errorMessage, form.firstChild);
     }
 }
 
@@ -140,7 +142,7 @@ async function obtenerPolizas() {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(userGlobal)
-        });
+        });  
 
         if (response.ok) {
             userGlobal = await response.json();
@@ -173,6 +175,7 @@ async function obtenerPolizas() {
             // Error en la respuesta del servidor
             console.error('Error al obtener las pólizas:', response.status);
         }
+        ocultarElementosHeader(); 
     } catch (error) {
         // Error en la solicitud o en la lógica de obtener las pólizas
         console.error('Error al obtener las pólizas:', error);
@@ -181,15 +184,13 @@ async function obtenerPolizas() {
 
 async function obtenerPolizasPorPlaca(event, placa) {
     event.preventDefault(); // Esta línea evita la acción por defecto
-
     try {
         const cedula = userGlobal.cedula;
-        
+
         const response = await fetch(`${backend}/polizas/findPoliza?placa=${encodeURIComponent(placa)}&cedula=${encodeURIComponent(cedula)}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         });
-
 
         if (response.ok) {
             const polizas = await response.json();
@@ -217,6 +218,7 @@ async function obtenerPolizasPorPlaca(event, placa) {
             // Error en la respuesta del servidor
             console.error('Error al obtener las pólizas:', response.status);
         }
+            ocultarElementosHeader();
     } catch (error) {
         // Error en la solicitud o en la lógica de obtener las pólizas
         console.error('Error al obtener las pólizas:', error);
@@ -224,12 +226,12 @@ async function obtenerPolizasPorPlaca(event, placa) {
 }
 
 async function obtenerPolizasYCoberturas() {
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     const idPoliza = urlParams.get('idPoliza');
 
     try {
-        
+
         const response = await fetch(`${backend}/polizas/findUnaPoliza?idPoliza=${encodeURIComponent(idPoliza)}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
@@ -273,7 +275,7 @@ async function obtenerPolizasYCoberturas() {
         } else {
             console.error('Error al obtener las coberturas:', coverageResponse.status);
         }
-
+        ocultarElementosHeader();
     } catch (error) {
         // Error en la solicitud o en la lógica de obtener las pólizas y coberturas
         console.error('Error al obtener la poliza y las coberturas:', error);
@@ -319,6 +321,7 @@ async function actualizarDatosCliente() {
         let data = await response.json();
         console.log('Datos del cliente actualizados:', data);
         obtenerDatosCliente();
+        ocultarElementosHeader();
     } catch (error) {
         console.error('Error:', error);
     }
@@ -338,17 +341,22 @@ function obtenerDatosCliente() {
 ;
 
 function ocultarElementosHeader() {
-    const datosElement = document.getElementById('datosElement');
     const polizasElement = document.getElementById('polizasElement');
+    const datosElement = document.getElementById('datosElement');
     const logoutElement = document.getElementById('logoutElement');
     const loginElement = document.getElementById('loginElement');
 
-
-    if (userGlobal.nombre === '') {
-        datosElement.style.display = 'none'; // Ocultar el elemento de datos
-        polizasElement.style.display = 'none'; // Ocultar el elemento de polizas
+    if (!userGlobal || userGlobal.cedula === '') {
+        // Si no hay usuario logueado, ocultar elementos del encabezado
+        polizasElement.style.display = 'none';
+        datosElement.style.display = 'none';
         logoutElement.style.display = 'none';
+        loginElement.style.display = 'block';
     } else {
+        // Si hay un usuario logueado, ocultar elementos del encabezado
+        polizasElement.style.display = 'block';
+        datosElement.style.display = 'block';
+        logoutElement.style.display = 'block';
         loginElement.style.display = 'none';
     }
 }
@@ -361,13 +369,14 @@ function logout() {
 
 function loaded() {
     document.getElementById('registrar').addEventListener('click', e => registrar());
-    ocultarElementosHeader();
+    
 }
 
 document.addEventListener("DOMContentLoaded", loaded);
 document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
 document.addEventListener('DOMContentLoaded', obtenerPolizas);
 document.addEventListener('DOMContentLoaded', obtenerPolizasYCoberturas);
+document.addEventListener('DOMContentLoaded', ocultarElementosHeader);
 
 const form = document.getElementById('findPolizasForm'); // Asegúrate de reemplazar 'form-id' por el ID de tu formulario
 form.addEventListener('submit', (event) => obtenerPolizasPorPlaca(event, form.placa.value));
