@@ -8,13 +8,13 @@
     </head>
     <body>
         <div id="header"></div>
-        
+
         <div class="container mx-auto py-8 px-10">
             <div class="flex justify-between items-center">
                 <h1 class="text-3xl font-bold py-2">Mis Polizas</h1>
             </div>
-            
-            
+
+
             <form method="post" class="flex items-center" id="findPolizasForm">   
                 <label for="simple-search" class="sr-only">Placa</label>
                 <div class="relative w-full">
@@ -26,11 +26,11 @@
                 <button type="submit" id="buscar" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Buscar
                 </button>
-                <button type="button" onclick="mostrarModalCrearPoliza()" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                <button type="button" onclick="mostrarModal()" id="comprarBtn" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     Comprar
                 </button>
             </form>
-            
+
             <hr class="my-4">
             <div class="w-full">
                 <table class="w-full table-auto border border-gray-300">
@@ -52,11 +52,127 @@
                 </table>
             </div>
         </div>
-        
-        
+
+        <div id="modal" class="hidden">
+            <div class="fixed inset-0 flex items-center justify-center z-10">
+                <div class="bg-white w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 rounded-lg shadow-lg">
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <ul class="flex border-b">
+                                <li class="mr-1">
+                                    <button id="datosBtn" class="py-2 px-4 bg-blue-500 text-white font-semibold">Datos básicos</button>
+                                </li>
+                                <li class="mr-1">
+                                    <button id="coberturasBtn" class="py-2 px-4 bg-blue-500 text-white font-semibold">Coberturas</button>
+                                </li>
+                                <li>
+                                    <button id="pagoBtn" class="py-2 px-4 bg-blue-500 text-white font-semibold">Compra y Pago</button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="datosContent">
+                            <h1 class="mb-4">Póliza</h1>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="placa" class="form-label">Placa:</label>
+                                    <input type="text" class="form-control" id="placa" name="placa" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="marcaModelo" class="form-label">Marca-Modelo:</label>
+                                    <select class="form-select" id="marcaModelo" name="marcaModelo" required>
+                                        <option value="">Selecciona una opción</option>
+                                        <!-- Aquí debes agregar la lógica para generar las opciones -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="año" class="form-label">Año:</label>
+                                    <input type="number" class="form-control" id="annio" name="annio">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="valor" class="form-label">Valor:</label>
+                                    <input type="number" class="form-control" id="valor" name="valor">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="modoPago" class="form-label">Modo de pago:</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="trimestral" name="modoPago" value="trimestral">
+                                        <label class="form-check-label" for="trimestral">Trimestral</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="semestral" name="modoPago" value="semestral">
+                                        <label class="form-check-label" for="semestral">Semestral</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="anual" name="modoPago" value="anual">
+                                        <label class="form-check-label" for="anual">Anual</label>
+                                    </div>
+                                </div>
+                                <button id="coberturasNextBtn" type="button" class="btn btn-primary">Siguiente (Cobertura)</button>
+                            </form>
+                        </div>
+
+                        <div id="coberturasContent" class="hidden">
+                            <h1 class="mb-4">Coberturas</h1>
+                            <h2 class="mb-4">Auto:</h2>
+                            <form>
+                                <!-- Aquí debes agregar la lógica para generar las categorías y coberturas -->
+                                <button id="pagoNextBtn" type="button" class="btn btn-primary">Siguiente (Pago)</button>
+                            </form>
+                        </div>
+
+                        <div id="pagoContent" class="hidden">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pago</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Auto:</h6>
+                                    <hr>
+                                    <table class="table">
+                                        <h5 class="card-title">Póliza</h5>
+                                        <tbody>
+                                            <tr>
+                                                <td>Cliente</td>
+                                                <td id="clienteValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fecha de inicio</td>
+                                                <td id="fechaInicioValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Plazo de pago</td>
+                                                <td id="plazoPagoValue"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Costo Total</td>
+                                                <td id="costoTotalValue"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table">
+                                        <h5 class="card-title">Coberturas</h5>
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción de la cobertura</th>
+                                                <th>Costo mínimo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="coberturasTableBody">
+                                            <!-- Aquí se agregarán las coberturas seleccionadas -->
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-primary">Pagar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="footer"></div>
         <script src="/SegurosFrontEnd/js/includes.js"></script>
         <script src="/SegurosFrontEnd/js/user.js"></script>
+        <script src="/SegurosFrontEnd/js/modal.js"></script>
     </body>
 </html>
 
