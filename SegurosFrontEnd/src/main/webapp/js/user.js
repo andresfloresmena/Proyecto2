@@ -376,7 +376,6 @@ document.addEventListener("DOMContentLoaded", loaded);
 document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
 document.addEventListener('DOMContentLoaded', obtenerPolizas);
 document.addEventListener('DOMContentLoaded', obtenerPolizasYCoberturas);
-document.addEventListener('DOMContentLoaded', ocultarElementosHeader);
 
 const form = document.getElementById('findPolizasForm'); // Asegúrate de reemplazar 'form-id' por el ID de tu formulario
 form.addEventListener('submit', (event) => obtenerPolizasPorPlaca(event, form.placa.value));
