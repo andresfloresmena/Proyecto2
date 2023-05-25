@@ -14,12 +14,17 @@ import jakarta.ws.rs.core.*;
 import com.proyecto.segurosbackend.logic.Usuario;
 import com.proyecto.segurosbackend.logic.Service;
 import jakarta.annotation.security.PermitAll;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
 @Path("/login")
 @PermitAll
 public class Login {
+    @Context
+    HttpServletRequest request;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -30,6 +35,7 @@ public class Login {
             try {
                 Cliente real = Service.instance().usuarioFind(usuario.getCedula(), usuario.getClave());
                 if (real != null) {
+                    request.getSession(true).setAttribute("user", real);
                     return real;
                 } else {
                     errores.put("identificacion", "Usuario o clave incorrectos");
@@ -51,6 +57,9 @@ public class Login {
     @POST
     @Path("/logout")
     public Response logout() {
+        HttpSession session = request.getSession(true);
+        session.removeAttribute("user");
+        session.invalidate();
         return Response.ok().entity("Desconexión exitosa").build();
     }
 
