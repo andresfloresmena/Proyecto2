@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Polizas</title>
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+
         <link rel="stylesheet" href="/SegurosFrontEnd/css/style.css"/>
     </head>
     <body>
@@ -87,8 +90,16 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="fecha" class="block mb-2 font-semibold text-gray-700">Fecha</label>
-                                    <input type="text" class="form-input block w-full px-4 py-2 border rounded-lg" id="fecha" name="fecha" required>
+                                    <div class="relative">
+                                        <input type="text" class="form-input block w-full px-4 py-2 border rounded-lg" id="fecha" name="fecha" required>
+                                        <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.293 2.293a1 1 0 0 0-1.414 0L12 4.586 9.707 2.293a1 1 0 0 0-1.414 1.414L10.586 6l-2.293 2.293a1 1 0 1 0 1.414 1.414L12 7.414l2.293 2.293a1 1 0 0 0 1.414-1.414L13.414 6l2.293-2.293a1 1 0 0 0 0-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </span>
+                                    </div>
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="marcaModelo" class="block mb-2 font-semibold text-gray-700">Marca-Modelo:</label>
                                     <select class="form-select block w-full px-4 py-2 border rounded-lg" id="marcaModelo" name="marcaModelo" required>
@@ -186,6 +197,7 @@
         <script src="/SegurosFrontEnd/js/includes.js"></script>
         <script src="/SegurosFrontEnd/js/user.js"></script>
         <script src="/SegurosFrontEnd/js/modal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     </body>
 </html>
 

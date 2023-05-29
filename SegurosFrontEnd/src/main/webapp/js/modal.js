@@ -19,6 +19,16 @@ function closeModal() {
   // Restaurar el fondo detrás del modal
   let modalOverlay = document.getElementById("modal-overlay");
   modalOverlay.style.display = "none";
+
+  // Restablecer los valores de los campos de entrada a blanco
+  const inputs = modal.querySelectorAll("input, select");
+  inputs.forEach((input) => {
+    if (input.type === "radio" || input.type === "checkbox") {
+      input.checked = false; // Desmarcar los elementos de tipo radio o checkbox
+    } else {
+      input.value = ""; // Establecer el valor del campo en blanco
+    }
+  });
 }
 
 
@@ -98,3 +108,11 @@ const datosBtn = document.getElementById('datosBtn');
     coberturasContent.classList.add('hidden');
     pagoContent.classList.remove('hidden');
   });
+  
+  document.addEventListener("DOMContentLoaded", function() {
+  flatpickr("#fecha", {
+    dateFormat: "Y-m-d", // Formato de fecha (Año-Mes-Día)
+    allowInput: true, // Permite la entrada manual
+    clickOpens: true, // Abre el calendario al hacer clic en el campo
+  });
+});
