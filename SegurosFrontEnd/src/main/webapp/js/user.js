@@ -35,6 +35,7 @@ let userGlobal = getUserData() || {
 };
 
 async function registrar() {
+    ocultarElementosHeader();
     let id = document.getElementById("id").value;
     let clave = document.getElementById("clave").value;
     let nombre = document.getElementById("nombre").value;
@@ -90,26 +91,55 @@ async function login() {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(usuario)
         });
-        
+
         if (response.ok) {
             userGlobal = await response.json();
-            setUserData(userGlobal);
-            // Verificar el tipo de usuario y realizar alguna acción correspondiente
-            switch (userGlobal.usuario.tipo) {
-                case 1:
-                    const paginaPolizas = '/SegurosFrontEnd/presentation/cliente/polizas/View.html';
-                    // Redireccionar a la página correspondiente
-                    window.location.href = paginaPolizas;
-                    console.log('Inicio de sesión exitoso - Tipo 1');
-                    break;
-                case 2:
-                    // Acción para tipo de usuario 2
-                    console.log('Inicio de sesión exitoso - Tipo 2');
-                    break;
-                default:
-                    console.error('Tipo de usuario no válido');
+            if (userGlobal.cedula !== "000") {
+                switch (userGlobal.usuario.tipo) {
+                    case 1:
+                        const paginaPolizas = '/SegurosFrontEnd/presentation/cliente/polizas/View.html';
+                        // Redireccionar a la página correspondiente
+                        window.location.href = paginaPolizas;
+                        console.log('Inicio de sesión exitoso - Tipo 1');
+                        break;
+                    case 2:
+                        // Acción para tipo de usuario 2
+                        console.log('Inicio de sesión exitoso - Tipo 2');
+                        break;
+                    default:
+                }
+            } else {
+                const identificacionInput = document.getElementById('identificacion');
+                const claveInput = document.getElementById('clave');
+                const errorMessage = document.createElement('p');
+
+                identificacionInput.classList.add('border-red-500');
+                claveInput.classList.add('border-red-500');
+
+                errorMessage.textContent = 'Identificación o clave incorrectos. ¡Inténtelo de nuevo!';
+                errorMessage.classList.add('text-red-500', 'text-sm', 'mb-2');
+
+                const form = document.querySelector('form');
+
+    // Agregar evento de escucha de entrada para el input de identificación
+                identificacionInput.addEventListener('input', clearErrorMessage);
+    // Agregar evento de escucha de entrada para el input de clave
+                claveInput.addEventListener('input', clearErrorMessage);
+
+                function clearErrorMessage() {
+                    const existingErrorMessage = form.querySelector('p');
+                    if (existingErrorMessage) {
+                        form.removeChild(existingErrorMessage);
+                    }
+                }
+
+                form.insertBefore(errorMessage, form.firstChild);
+                localStorage.clear();
+                userGlobal = {}; // Limpiar los datos en userGlobal
             }
-            ocultarElementosHeader();
+            // Verificar el tipo de usuario y realizar alguna acción correspondiente
+            
+            
         } else {
             // Autenticación fallida, mostrar algún mensaje de error
             console.error('Error en el inicio de sesión');
@@ -117,22 +147,11 @@ async function login() {
             // Agregar clases CSS para resaltar el error
 
         }
-
+        setUserData(userGlobal);
     } catch (error) {
 // Error en la solicitud o en la lógica de autenticación
         console.error('Error en la solicitud:', error);
-        const identificacionInput = document.getElementById('identificacion');
-        const claveInput = document.getElementById('clave');
-        const errorMessage = document.createElement('p');
 
-        identificacionInput.classList.add('border-red-500');
-        claveInput.classList.add('border-red-500');
-
-        errorMessage.textContent = 'Identificacion o clave incorrectos. Intentelo de nuevo!';
-        errorMessage.classList.add('text-red-500', 'text-sm', 'mb-2');
-
-        const form = document.querySelector('form');
-        form.insertBefore(errorMessage, form.firstChild);
     }
 }
 
@@ -142,7 +161,7 @@ async function obtenerPolizas() {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(userGlobal)
-        });  
+        });
 
         if (response.ok) {
             userGlobal = await response.json();
@@ -175,7 +194,7 @@ async function obtenerPolizas() {
             // Error en la respuesta del servidor
             console.error('Error al obtener las pólizas:', response.status);
         }
-        ocultarElementosHeader(); 
+        ocultarElementosHeader();
     } catch (error) {
         // Error en la solicitud o en la lógica de obtener las pólizas
         console.error('Error al obtener las pólizas:', error);
@@ -218,7 +237,7 @@ async function obtenerPolizasPorPlaca(event, placa) {
             // Error en la respuesta del servidor
             console.error('Error al obtener las pólizas:', response.status);
         }
-            ocultarElementosHeader();
+        ocultarElementosHeader();
     } catch (error) {
         // Error en la solicitud o en la lógica de obtener las pólizas
         console.error('Error al obtener las pólizas:', error);
@@ -369,7 +388,7 @@ function logout() {
 
 function loaded() {
     document.getElementById('registrar').addEventListener('click', e => registrar());
-    
+
 }
 
 document.addEventListener("DOMContentLoaded", loaded);

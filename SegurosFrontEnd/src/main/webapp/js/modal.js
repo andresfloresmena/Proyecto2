@@ -1,18 +1,26 @@
 function mostrarModal() {
-    // Obtener el div de la ventana modal
-    var modal = document.getElementById("modal");
-    // Mostrar la ventana modal
-    modal.classList.remove("hidden");
-    modal.classList.add("block");
+  // Obtener el div de la ventana modal
+  let modal = document.getElementById("modal");
+  // Mostrar la ventana modal
+  modal.style.display = "block";
+
+  // Oscurecer el fondo detrás del modal
+  let modalOverlay = document.getElementById("modal-overlay");
+  modalOverlay.style.display = "block";
 }
 
 function closeModal() {
-    // Obtener el elemento modal
-    const modal = document.getElementById("modal");
+  // Obtener el elemento modal
+  const modal = document.getElementById("modal");
 
-    // Ocultar el modal
-    modal.classList.add("hidden");
+  // Ocultar el modal
+  modal.style.display = "none";
+
+  // Restaurar el fondo detrás del modal
+  let modalOverlay = document.getElementById("modal-overlay");
+  modalOverlay.style.display = "none";
 }
+
 
 const datosBtn = document.getElementById('datosBtn');
   const coberturasBtn = document.getElementById('coberturasBtn');

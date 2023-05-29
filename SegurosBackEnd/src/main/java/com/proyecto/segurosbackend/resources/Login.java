@@ -38,9 +38,9 @@ public class Login {
                     request.getSession(true).setAttribute("user", real);
                     return real;
                 } else {
-                    errores.put("identificacion", "Usuario o clave incorrectos");
-                    errores.put("clave", "Usuario o clave incorrectos");
-                    return null;
+                    real = new Cliente();
+                    real.setCedula("000");
+                    return real;
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();

@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Polizas</title>
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/SegurosFrontEnd/css/style.css"/>
     </head>
     <body>
         <div id="header"></div>
@@ -53,9 +54,9 @@
             </div>
         </div>
 
-        <div id="modal" class="hidden">
-            <div class="fixed inset-0 flex items-center justify-center z-10">
-                <div class="bg-white w-full md:w-3/4 lg:w-2/3 xl:w-1/2 h-full overflow-auto rounded-lg shadow-lg">
+        <div id="modal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+            <div class="flex items-center justify-center">
+                <div class="bg-white w-full md:w-3/4 lg:w-2/3 xl:w-1/2 h-4/4 overflow-auto rounded-lg shadow-lg">
                     <button id="closeBtn" class=" top-2 right-2 text-xl bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center" onClick="closeModal()">&#10005;</button>
                     <div class="p-6">
                         <div class="flex justify-center items-center mb-6">
@@ -64,7 +65,7 @@
 
                         </div>
                         <div class="mb-4">
-                            <ul class="flex border-b">
+                            <ul class="flex border-b items-center justify-center">
                                 <li class="mr-1">
                                     <button id="datosBtn" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded">Datos básicos</button>
                                 </li>
@@ -172,7 +173,7 @@
                                         <!-- Aquí se agregarán las coberturas seleccionadas -->
                                     </tbody>
                                 </table>
-                                <button type="button" class="px-4 py-2 mt-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Pagar</button>
+                                <button type="button" class="px-4 py-2 mt-4 bg-green-500 text-white font-semibold rounded hover:bg-green-700 transition-colors">Pagar</button>
                             </div>
                         </div>
                     </div>
