@@ -1,9 +1,13 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Header</title>
         <!-- Agregamos Tailwind -->
         <link href="/SegurosFrontEnd/css/normalize.css" rel="stylesheet" type="text/css" />
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"/>
             <link href="/SegurosFrontEnd/css/style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -19,65 +23,69 @@
                 <a href="http://wa.link/7due0o" class="hover:text-blue-700 font-bold text-gray-500">+506 8767 7128</a>
             </div>
             <div class="menu">
-                <ul class="flex space-x-4 text-gray-500 mr-4">
-                    <li>
-                        <a href="/SegurosFrontEnd/presentation/Index.html" class="hover:text-blue-700 font-bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill inline-block mr-1" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 3.293l5.146 5.147a.5.5 0 0 1-.708.708L8 4.707 2.854 9.854a.5.5 0 1 1-.708-.708L8 3.293zM4 9V7h2v2H4zm8-2h2v4a1 1 0 0 1-1 1h-3v-2h2V8H6v4H4a1 1 0 0 1-1-1V7H1a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2h3a1 1 0 0 1 1 1v2zm-1-2V4h-2v1h2z"/>
-                            </svg>
-                            Inicio
-                        </a>
-                    </li>
-
-                    <li id="polizasElement" class="relative">
-                        <a href="/SegurosFrontEnd/presentation/cliente/polizas/View.html" class="hover:text-blue-700 font-bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-fill inline-block mr-1" viewBox="0 0 16 16">
-                                <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4.414a1 1 0 0 0-.293-.707L10.586 1H2zm2 1h6v1H4V2zm0 2h8v1H4V4zm0 2h8v1H4V6zm0 2h8v1H4V8zm0 2h8v1H4v-1zm-2 2h10v1H2v-1zm0 2h10v1H2v-1z"/>
-                            </svg>
-                            Pólizas
-                        </a>
-                        <ul class="absolute top-full left-0 w-36  rounded-lg shadow-lg py-2 px-4 mt-1">
-                            <!--submenu -->
-                        </ul>
-                    </li>
-                    <li id="datosElement">
-                        <a href="/SegurosFrontEnd/presentation/cliente/datos/View.html" class="hover:text-blue-700 font-bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill inline-block mr-1" viewBox="0 0 16 16">
-                                <path d="M8 0a4 4 0 1 0 4 4 4 4 0 0 0-4-4zm0 7c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3zm0 1c2.21 0 4 1.343 4 3v1H4v-1c0-1.657 1.79-3 4-3zm6 1v1h1v2H1V9h1V8H1V6h1V5H1V3h14v3h-1V4h-1v2h1zm-3 5h2v1h-2v1h-1v-1H8v-1h2v-1h1v1z"/>
-                            </svg>
-                            Datos
-                        </a>
-                        <ul class="absolute top-full left-0 w-36  rounded-lg shadow-lg py-2 px-4 mt-1">
-                            <!--submenu -->
-                        </ul>
-                    </li>
-
-
-                    <li id="logoutElement">
-                        <button id="logout" onclick="logout()" class="hover:text-blue-700 font-bold">
-                            <a href="/SegurosFrontEnd/presentation/Index.html">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right inline-block mr-1" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M5.5 1a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm5.5 5a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0 0 1h8.5a.5.5 0 0 0 .5-.5zm-5-5A1.5 1.5 0 0 1 12 2.5v11a.5.5 0 0 1-1 0v-11A1.5 1.5 0 0 1 9.5 1h-8A1.5 1.5 0 0 0 0 2.5v11A1.5 1.5 0 0 0 1.5 15h8a1.5 1.5 0 0 0 1.5-1.5v-11A1.5 1.5 0 0 0 9.5 1h-8z"/>
-                                <path fill-rule="evenodd" d="M14.854 8.354a.5.5 0 0 0 0-.708L12.207 4H15.5a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 1 0V4.707l2.647 2.647zM3 7.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3.5A.5.5 0 0 1 3 7.5zm1 5a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0 0 1h1.5a.5.5 0 0 0 .5-.5z"/>
-                            </svg>
-                            Logout
+                <div class="menu">
+                    <ul class="flex space-x-6 text-gray-500 mr-9">
+                        <li>
+                            <a href="/SegurosFrontEnd/presentation/Index.html" class="hover:text-blue-700 font-bold flex items-center mr-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z"/>
+                                </svg>
+                                <span class="ml-1">Inicio</span>
                             </a>
-                        </button>
-                        <ul class="absolute top-full left-0 w-36  rounded-lg shadow-lg py-2 px-4 mt-1">
-                            <!--submenu -->
-                        </ul>
-                    </li>
+                        </li>
 
-                    <li id="loginElement">
-                        <button onclick="mostrarModal()" class="hover:text-blue-700 font-bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill inline-block mr-1" viewBox="0 0 16 16">
-                                <path d="M7 1h2v2H7V1zm2 2h2v2H9V3zm2-2h2v2h-2V1zm-1 10h3V5H5v8h3v-1H6V6h6v5h-1v1zm2-2h2v2h-2v-2zM1 9H0v2h2V9H1zm12-8H3v14h10V1h-2zm-3 7v3h-2V8h2zm-3 0v3H6V8h1zm-3 0v3H3V8h2zm-1-6h2v2H4V2zm9 0h-2v2h2V2z"/>
-                            </svg>
-                            Iniciar sesión
-                        </button>
-                    </li>
-                </ul>
-            </div>
+                        <li id="polizasElement" class="relative">
+                            <a href="/SegurosFrontEnd/presentation/cliente/polizas/View.html" class="hover:text-blue-700 font-bold flex items-center mr-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                    <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                                </svg>
+                                <span class="ml-1">Pólizas</span>
+                            </a>
+                            <ul class="absolute top-full left-0 w-36 rounded-lg shadow-lg py-2 px-4 mt-1">
+                                <!--submenu -->
+                            </ul>
+                        </li>
+                        <li id="datosElement">
+                            <a href="/SegurosFrontEnd/presentation/cliente/datos/View.html" class="hover:text-blue-700 font-bold flex items-center mr-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-data-fill" viewBox="0 0 16 16">
+                                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1ZM10 8a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1Zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"/>
+                                </svg>
+                                <span class="ml-1">Actualizar Datos</span>
+                            </a>
+                            <ul class="absolute top-full left-0 w-36 rounded-lg shadow-lg py-2 px-4 mt-1">
+                                <!--submenu -->
+                            </ul>
+                        </li>
+
+
+                        <li id="logoutElement">
+                            <button id="logout" onclick="logout()">
+                                <a href="/SegurosFrontEnd/presentation/Index.html" class="hover:text-blue-700 font-bold flex items-center mr-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
+                                        <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                                        <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+                                    </svg>
+                                   <span class="ml-1">Logout</span>
+                                </a>
+                            </button>
+                            <ul class="absolute top-full left-0 w-36 rounded-lg shadow-lg py-2 px-4 mt-1">
+                                <!--submenu -->
+                            </ul>
+                        </li>
+
+                        <li id="loginElement">
+                            <button onclick="mostrarModal()" class="hover:text-blue-700 font-bold flex items-center mr-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg>
+                                <span class="ml-1">Iniciar sesión</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
         </header>
         <script src="/SegurosFrontEnd/js/user.js"></script>
     </body>
