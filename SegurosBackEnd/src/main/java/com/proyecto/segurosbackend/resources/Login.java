@@ -14,7 +14,6 @@ import jakarta.ws.rs.core.*;
 import com.proyecto.segurosbackend.logic.Usuario;
 import com.proyecto.segurosbackend.logic.Service;
 import jakarta.annotation.security.PermitAll;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;

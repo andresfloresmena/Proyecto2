@@ -103,7 +103,9 @@ async function login() {
                         console.log('Inicio de sesión exitoso - Tipo 1');
                         break;
                     case 2:
-                        // Acción para tipo de usuario 2
+                        const paginaMenu = '/SegurosFrontEnd/presentation/administrador/menu/View.html';
+                        // Redireccionar a la página correspondiente
+                        window.location.href = paginaMenu;
                         console.log('Inicio de sesión exitoso - Tipo 2');
                         break;
                     default:
@@ -177,7 +179,7 @@ async function obtenerPolizas() {
                 tableHtml += `
                 <tr>
                     
-                    <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
+                    <td class="border border-gray-300 px-4 py-2">#${poliza.idPoliza}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.fechaInicio}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
@@ -220,7 +222,7 @@ async function obtenerPolizasPorPlaca(event, placa) {
             polizas.forEach(poliza => {
                 tableHtml += `
                 <tr>
-                    <td class="border border-gray-300 px-4 py-2">${poliza.idPoliza}</td>
+                    <td class="border border-gray-300 px-4 py-2">#${poliza.idPoliza}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.fechaInicio}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
