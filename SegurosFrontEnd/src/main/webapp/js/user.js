@@ -95,18 +95,19 @@ async function login() {
         if (response.ok) {
             userGlobal = await response.json();
             if (userGlobal.cedula !== "000") {
+                let paginaEscoger = '';
                 switch (userGlobal.usuario.tipo) {
                     case 1:
-                        const paginaPolizas = '/SegurosFrontEnd/presentation/cliente/polizas/View.html';
+                        paginaEscoger = '/SegurosFrontEnd/presentation/cliente/polizas/View.html';
                         // Redireccionar a la página correspondiente
-                        window.location.href = paginaPolizas;
+                        window.location.href = paginaEscoger;
                         console.log('Inicio de sesión exitoso - Tipo 1');
                         break;
                     case 2:
-                        const paginaMenu = '/SegurosFrontEnd/presentation/administrador/menu/View.html';
+                        paginaEscoger = '/SegurosFrontEnd/presentation/administrador/menu/View.html';
                         // Redireccionar a la página correspondiente
-                        window.location.href = paginaMenu;
-                        console.log('Inicio de sesión exitoso - Tipo 2');
+                        window.location.href = paginaEscoger;
+                        console.log('Inicio de sesión exitoso - Tipo 20');
                         break;
                     default:
                 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- Included Head HTML -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Listado de Clientes y Pólizas</title>
+        <!-- Tailwind CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+    <body>
+         <div id="header"></div>
+
+        <div class="container mx-auto px-4">
+            
+            <h1 class="mb-4 text-xl font-bold">Administrador - Gestion de clientes </h1>
+            
+            <div class="flex items-center justify-between mb-4">
+                <h2>Listado de Clientes y Pólizas</h2>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <a href="/GuiaDB/presentation/administrador/menu/View.jsp" class="no-underline text-white">Volver al Menu</a>
+                </button>
+            </div>
+
+            <!-- Aqui insertaremos dinamicamente el listado de clientes y polizas -->
+            <div id="clientes-polizas"></div>
+            
+        </div>
+
+        <div class="mt-5">
+            <!-- Included Footer HTML -->
+        </div>  
+
+         <div id="footer"></div>
+        <script src="/SegurosFrontEnd/js/includes.js"></script>
+        <script src="/SegurosFrontEnd/js/administrador.js"></script>
+    </body>
+</html>

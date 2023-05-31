@@ -95,13 +95,17 @@ insert into Cliente (cedula,nombre,usuario)
 insert into Cliente (cedula,nombre,usuario) 
 	values ("222","B.Banner",'222');
 
+insert into Cliente (cedula,nombre,usuario) 
+	values ("333","B.Banner",'333');
+
+
 SET @fecha_inicio = CURDATE();	
 
 insert into Categoria (descripcion) values ('Responsabilidad Civil');
 
-insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daño a Personas', 1000.00, 5.00);
-insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daño a Vehiculos', 1000.00, 5.00);
-insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daño a Inmuebles', 1000.00, 5.00);
+insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daï¿½o a Personas', 1000.00, 5.00);
+insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daï¿½o a Vehiculos', 1000.00, 5.00);
+insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daï¿½o a Inmuebles', 1000.00, 5.00);
 
 insert into Poliza (placa,fecha_inicio,plazo_pago,auto, annio,costo_total, cliente, id_poliza_modelo) 
 	values ("BKW251",@fecha_inicio, "Anual","Toyota - Telcel", "2022",20000.0, '111', 1);
