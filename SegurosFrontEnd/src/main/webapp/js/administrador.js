@@ -303,18 +303,16 @@ async function enviarFormularioCobertura(event) {
     };
 
     try {
-        const data = {
-            nuevaCobertura: nuevaCobertura,
-            categoria: categoria,
-        };
 
-        const response = await fetch(`${backend}/administrador/agregarCobertura`, {
+
+        const response = await fetch(`${backend}/administrador/agregarCobertura?categoria=${categoria}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(nuevaCobertura),
         });
+
 
         if (response.ok) {
             // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
@@ -505,17 +503,15 @@ async function enviarFormularioModelo(event) {
     };
 
     try {
-        const data = {
-            nuevoModelo: nuevoModelo,
-            id: marca
-        };
-        const response = await fetch(`${backend}/administrador/agregarModelo`, {
+
+        const response = await fetch(`${backend}/administrador/agregarModelo?marca=${marca}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(nuevoModelo),
         });
+
 
         if (response.ok) {
             // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
@@ -529,7 +525,7 @@ async function enviarFormularioModelo(event) {
     }
 
     // Obtener el nombre y la imagen del formulario
- 
+
 
 // Crear un objeto FormData y agregar los datos
     const formData = new FormData();

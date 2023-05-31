@@ -4,7 +4,6 @@
  */
 package com.proyecto.segurosbackend.resources;
 
-
 import com.proyecto.segurosbackend.logic.Categoria;
 import jakarta.ws.rs.Path;
 import com.proyecto.segurosbackend.logic.Cobertura;
@@ -29,22 +28,20 @@ import java.io.OutputStream;
 @Path("/administrador")
 @PermitAll
 public class Administrador {
-    
-//    @POST
-//    @Path("/agregarCobertura")
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    public Response agregarCobertura(Cobertura cobertura, String id) {
-//        try {
-//            // Agregar nueva cobertura con el servicio
-//            int ident = Integer.parseInt(id);
-//            Service.instance().agregarCobertura(ident,cobertura);
-//            return Response.ok().build();
-//        } catch (Exception e) {
-//            // Manejar cualquier excepción o error que pueda ocurrir durante la agregación de la cobertura
-//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-    
+
+    @POST
+    @Path("/agregarCobertura")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response agregarCobertura(Cobertura cobertura, @QueryParam("categoria") String id) {
+        try {
+            int ident = Integer.parseInt(id);
+            Service.instance().agregarCobertura(ident, cobertura);
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @POST
     @Path("/agregarCategoria")
     @Consumes({MediaType.APPLICATION_JSON})
@@ -58,7 +55,7 @@ public class Administrador {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     
     
     @GET
@@ -73,7 +70,7 @@ public class Administrador {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @GET
     @Path("/clientesYPolizas")
     @Consumes({MediaType.APPLICATION_JSON})
@@ -86,7 +83,7 @@ public class Administrador {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @GET
     @Path("/obtenerMarcas")
     @Consumes({MediaType.APPLICATION_JSON})
@@ -99,8 +96,8 @@ public class Administrador {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
-     @POST
+
+    @POST
     @Path("/agregarMarca")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarMarca(Marca marca) {
@@ -113,44 +110,42 @@ public class Administrador {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
-//    @POST
-//    @Path("/agregarModelo")
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    public Response agregarModelo(Modelo modelo, String id) {
-//        try {
-//            // Agregar nueva categoría con el servicio
-//            int ident = Integer.parseInt(id);
-//            Service.instance().agregarModelo(modelo, ident);
-//            return Response.ok().build();
-//        } catch (Exception e) {
-//            // Manejar cualquier excepción o error que pueda ocurrir durante la agregación de la categoría
-//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-    
+
+    @POST
+    @Path("/agregarModelo")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response agregarModelo(Modelo modelo, @QueryParam("marca") String id) {
+        try {
+            int ident = Integer.parseInt(id);
+            Service.instance().agregarModelo(modelo, ident);
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     public static final String LOCATION = "C:/AAA/proyecto/";
     @GET
     @Path("{name}/imagen")
     @Produces("image/png")
     public Response readImage(@PathParam("name") String name) throws IOException {
-        File file = new File(LOCATION+name);
+        File file = new File(LOCATION + name);
         Response.ResponseBuilder response = Response.ok((Object) file);
         return response.build();
     }
-    
+
     
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Path("{name}/flag")
-    public void createImage(@PathParam("name") String name, @FormParam("flag") InputStream in){
+    public void createImage(@PathParam("name") String name, @FormParam("flag") InputStream in) {
         try {
             OutputStream out = new FileOutputStream(new File(LOCATION + name));
             in.transferTo(out);
-            out.close();   
-        } catch (Exception ex){
+            out.close();
+        } catch (Exception ex) {
             throw new NotAcceptableException();
         }
     }
-     
+
 }
