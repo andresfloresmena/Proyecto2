@@ -30,19 +30,20 @@ import java.io.OutputStream;
 @PermitAll
 public class Administrador {
     
-    @POST
-    @Path("/agregarCobertura")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Response agregarCobertura(Cobertura cobertura, Integer id) {
-        try {
-            // Agregar nueva cobertura con el servicio
-            Service.instance().agregarCobertura(id,cobertura);
-            return Response.ok().build();
-        } catch (Exception e) {
-            // Manejar cualquier excepción o error que pueda ocurrir durante la agregación de la cobertura
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+//    @POST
+//    @Path("/agregarCobertura")
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    public Response agregarCobertura(Cobertura cobertura, String id) {
+//        try {
+//            // Agregar nueva cobertura con el servicio
+//            int ident = Integer.parseInt(id);
+//            Service.instance().agregarCobertura(ident,cobertura);
+//            return Response.ok().build();
+//        } catch (Exception e) {
+//            // Manejar cualquier excepción o error que pueda ocurrir durante la agregación de la cobertura
+//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
     
     @POST
     @Path("/agregarCategoria")
@@ -113,19 +114,20 @@ public class Administrador {
         }
     }
     
-    @POST
-    @Path("/agregarModelo")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Response agregarModelo(Modelo modelo, Integer id) {
-        try {
-            // Agregar nueva categoría con el servicio
-            Service.instance().agregarModelo(modelo, id);
-            return Response.ok().build();
-        } catch (Exception e) {
-            // Manejar cualquier excepción o error que pueda ocurrir durante la agregación de la categoría
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+//    @POST
+//    @Path("/agregarModelo")
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    public Response agregarModelo(Modelo modelo, String id) {
+//        try {
+//            // Agregar nueva categoría con el servicio
+//            int ident = Integer.parseInt(id);
+//            Service.instance().agregarModelo(modelo, ident);
+//            return Response.ok().build();
+//        } catch (Exception e) {
+//            // Manejar cualquier excepción o error que pueda ocurrir durante la agregación de la categoría
+//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
     
     public static final String LOCATION = "C:/AAA/proyecto/";
     @GET
@@ -150,16 +152,5 @@ public class Administrador {
             throw new NotAcceptableException();
         }
     }
-    
-
-
-
-
-    
-
-    
-    
-    
-    
-    
+     
 }
