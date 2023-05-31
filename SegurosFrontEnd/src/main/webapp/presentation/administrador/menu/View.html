@@ -3,29 +3,36 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/SegurosFrontEnd/css/normalize.css"/>
-        <link rel="stylesheet" href="/SegurosFrontEnd/css/style.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
         <title>Administrador - Menú</title>
+        <style>
+            .custom-hover:hover {
+                background-color: #1c64f2 !important; /* This is tailwind's blue-500 */
+                color: white;
+                transition: background-color 1.3s ease, color 1.3s ease;
+                
+            }
+        </style>
     </head>
-    <body>
+    <body class="bg-gray-100">
         <div id="header"></div>
-        <div class="container">
-            <h1 class="my-4">Administrador - Menú</h1>
+        <div class="container mx-auto bg-white shadow-md rounded p-4 my-4">
+            <h1 class="text-xl font-bold mb-4">Administrador - Menú</h1>
             <div class="list-group">
-                <a href="/SegurosFrontEnd/presentation/administrador/clientes/View.html" class="list-group-item list-group-item-action">
+                <a href="/SegurosFrontEnd/presentation/administrador/clientes/View.html" class="block bg-white text-gray-800 border rounded-lg px-4 py-2 my-2 custom-hover transition duration-500 ease-in-out">
                     Administración de clientes y pólizas
                 </a>
-                <a href="/SegurosFrontEnd/presentation/administrador/marcas-modelos/View.html" class="list-group-item list-group-item-action">
+                <a href="/SegurosFrontEnd/presentation/administrador/marcas-modelos/View.html" class="block bg-white text-gray-800 border rounded-lg px-4 py-2 my-2 custom-hover transition duration-500 ease-in-out">
                     Administración de marcas y modelos de autos
                 </a>
-                <a href="/SegurosFrontEnd/presentation/administrador/categorias/View.html" class="list-group-item list-group-item-action">
+                <a href="/SegurosFrontEnd/presentation/administrador/categorias/View.html" class="block bg-white text-gray-800 border rounded-lg px-4 py-2 my-2 custom-hover transition duration-500 ease-in-out">
                     Administración de categorías y coberturas
                 </a>
             </div>
         </div>
 
         <div id="footer"></div>
-         <script src="/SegurosFrontEnd/js/includes.js"></script>
+        <script src="/SegurosFrontEnd/js/includes.js"></script>
         <script src="/SegurosFrontEnd/js/administrador.js"></script>
     </body>
 </html>

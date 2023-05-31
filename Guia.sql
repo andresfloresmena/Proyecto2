@@ -103,9 +103,9 @@ SET @fecha_inicio = CURDATE();
 
 insert into Categoria (descripcion) values ('Responsabilidad Civil');
 
-insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Da�o a Personas', 1000.00, 5.00);
-insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Da�o a Vehiculos', 1000.00, 5.00);
-insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Da�o a Inmuebles', 1000.00, 5.00);
+insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daño Personas', 1000.00, 5.00);
+insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daño a Vehiculos', 1000.00, 5.00);
+insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daño a Inmuebles', 1000.00, 5.00);
 
 insert into Poliza (placa,fecha_inicio,plazo_pago,auto, annio,costo_total, cliente, id_poliza_modelo) 
 	values ("BKW251",@fecha_inicio, "Anual","Toyota - Telcel", "2022",20000.0, '111', 1);

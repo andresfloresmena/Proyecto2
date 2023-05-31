@@ -19,44 +19,45 @@ function renderClientesYPolizas(clientesYPolizas) {
     // Iterate over all clients
     for (const cliente of clientesYPolizas) {
         const clienteDiv = document.createElement('div');
+        clienteDiv.className = 'mb-4 bg-gray-200 p-4 rounded shadow'; // Add background and spacing to differentiate
 
         // Create a table for each client and their policies
         clienteDiv.innerHTML = `
-            <table class="table-auto">
-                <thead>
+            <table class="table-auto w-full text-gray-700 divide-y divide-gray-200">
+                <thead class="bg-blue-300 text-white">
                     <tr>
-                        <th>ID Cliente</th>
-                        <th>Nombre</th>
-                        <th>Pólizas</th>
+                        <th class="px-6 py-3 text-xs leading-4 font-medium uppercase tracking-wider">ID Cliente</th>
+                        <th class="px-6 py-3 text-xs leading-4 font-medium uppercase tracking-wider">Nombre</th>
+                        <th class="px-6 py-3 text-xs leading-4 font-medium uppercase tracking-wider">Pólizas</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td>${cliente.id}</td>
-                        <td>${cliente.nombre}</td>
-                        <td>
-                            <table class="table-auto">
-                                <thead>
+                        <td class="px-6 py-4 whitespace-no-wrap">${cliente.cedula}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap">${cliente.nombre}</td>
+                        <td class="px-6 py-4">
+                            <table class="table-auto w-full text-gray-700 divide-y divide-gray-200">
+                                <thead class="bg-blue-200 text-white">
                                     <tr>
-                                        <th>ID Póliza</th>
-                                        <th>Placa</th>
-                                        <th>Fecha Inicio</th>
-                                        <th>Plazo de Pago</th>
-                                        <th>Auto</th>
-                                        <th>Año</th>
-                                        <th>Costo Total</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">ID Póliza</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Placa</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Fecha Inicio</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Plazo de Pago</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Auto</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Año</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Costo Total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="bg-white divide-y divide-gray-200">
                                     ${cliente.polizas.map(poliza => `
                                         <tr>
-                                            <td>${poliza.id}</td>
-                                            <td>${poliza.placa}</td>
-                                            <td>${poliza.fechaInicio}</td>
-                                            <td>${poliza.plazoPago}</td>
-                                            <td>${poliza.auto}</td>
-                                            <td>${poliza.annio}</td>
-                                            <td>₡${poliza.costoTotal}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${poliza.idPoliza}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${poliza.placa}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${poliza.fechaInicio}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${poliza.plazoPago}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${poliza.auto}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${poliza.annio}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">₡${poliza.costoTotal}</td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
@@ -106,14 +107,13 @@ async function agregarCobertura(idCategoria, nombreCobertura, costoMinimo, costo
 
     // Asegúrate de manejar correctamente la respuesta.
 }
-
 async function fetchCategorias() {
     const response = await fetch(`${backend}/administrador/obtenerCategorias`);
     const categorias = await response.json();
     return categorias;
 }
 
-// Render clients and their policies in the HTML page
+// Render categories and their coverages in the HTML page
 function renderCategorias(categorias) {
     
     const categoriasDiv = document.getElementById('categorias-coberturas');
@@ -122,38 +122,39 @@ function renderCategorias(categorias) {
     // Iterate over all categories
     for (const categoria of categorias) {
         const categoriaDiv = document.createElement('div');
+        categoriaDiv.className = 'mb-4 bg-gray-200 p-4 rounded shadow'; // Add background and spacing to differentiate
 
         // Create a table for each category and their coverages
         categoriaDiv.innerHTML = `
-            <table class="table-auto">
-                <thead>
+            <table class="table-auto w-full text-gray-700 divide-y divide-gray-200">
+                <thead class="bg-blue-300 text-white">
                     <tr>
-                        <th>ID Categoría</th>
-                        <th>Descripción</th>
-                        <th>Coberturas específicas</th>
+                        <th class="px-6 py-3 text-xs leading-4 font-medium uppercase tracking-wider">ID Categoría</th>
+                        <th class="px-6 py-3 text-xs leading-4 font-medium uppercase tracking-wider">Descripción</th>
+                        <th class="px-6 py-3 text-xs leading-4 font-medium uppercase tracking-wider">Coberturas específicas</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td>${categoria.id}</td>
-                        <td>${categoria.descripcion}</td>
-                        <td>
-                            <table class="table-auto">
-                                <thead>
+                        <td class="px-6 py-4 whitespace-no-wrap">${categoria.id}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap">${categoria.descripcion}</td>
+                        <td class="px-6 py-4">
+                            <table class="table-auto w-full text-gray-700 divide-y divide-gray-200">
+                                <thead class="bg-blue-200 text-white">
                                     <tr>
-                                        <th>ID Cobertura</th>
-                                        <th>Descripción</th>
-                                        <th>Costo mínimo</th>
-                                        <th>Costo porcentual</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">ID Cobertura</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Descripción</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Costo mínimo</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Costo porcentual</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="bg-white divide-y divide-gray-200">
                                     ${categoria.coberturas.map(cobertura => `
                                         <tr>
-                                            <td>${cobertura.id}</td>
-                                            <td>${cobertura.descripcion}</td>
-                                            <td>₡${cobertura.costoMinimo}</td>
-                                            <td>${cobertura.costoPorcentual}%</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${cobertura.id}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${cobertura.descripcion}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">₡${cobertura.costoMinimo}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${cobertura.costoPorcentual}%</td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
@@ -167,7 +168,7 @@ function renderCategorias(categorias) {
     }
 }
 
-// Fetch and render clients when the page is loaded
+// Fetch and render categories when the page is loaded
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchCategorias().then(renderCategorias );
 });
@@ -184,35 +185,36 @@ async function fetchMarcas() {
 
     for (const marca of marcas) {
         const marcaDiv = document.createElement('div');
+        marcaDiv.className = 'mb-4 bg-gray-200 p-4 rounded shadow'; // Add background and spacing to differentiate
 
         marcaDiv.innerHTML = `
-            <table class="table-auto">
-                <thead>
+            <table class="table-auto w-full text-gray-700 divide-y divide-gray-200">
+                <thead class="bg-blue-300 text-white">
                     <tr>
-                        <th>ID Marca</th>
-                        <th>Nombre</th>
-                        <th>Modelos específicos</th>
+                        <th class="px-6 py-3 text-xs leading-4 font-medium uppercase tracking-wider">ID Marca</th>
+                        <th class="px-6 py-3 text-xs leading-4 font-medium uppercase tracking-wider">Nombre</th>
+                        <th class="px-6 py-3 text-xs leading-4 font-medium uppercase tracking-wider">Modelos específicos</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td>${marca.id}</td>
-                        <td>${marca.nombre}</td>
-                        <td>
-                            <table class="table-auto">
-                                <thead>
+                        <td class="px-6 py-4 whitespace-no-wrap">${marca.id}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap">${marca.nombre}</td>
+                        <td class="px-6 py-4">
+                            <table class="table-auto w-full text-gray-700 divide-y divide-gray-200">
+                                <thead class="bg-blue-200 text-white">
                                     <tr>
-                                        <th>ID Modelo</th>
-                                        <th>Nombre</th>
-                                        <th>Imagen</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">ID Modelo</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Nombre</th>
+                                        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Imagen</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="bg-white divide-y divide-gray-200">
                                     ${marca.modelos.map(modelo => `
                                         <tr>
-                                            <td>${modelo.id}</td>
-                                            <td>${modelo.nombre}</td>
-                                            <td><<img class="imagen" src="${backend}/administrador/${poliza.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${modelo.id}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap">${modelo.nombre}</td>
+                                            <td class="px-3 py-2 whitespace-no-wrap"><img class="imagen" src="${backend}/administrador/${modelo.id}/imagen" style="width: 50px; height: 50px;"></td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
