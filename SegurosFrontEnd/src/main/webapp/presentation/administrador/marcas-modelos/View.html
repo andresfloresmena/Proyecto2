@@ -16,20 +16,55 @@
             <div class="flex items-center justify-between mb-4">
                 <h2>Listado de Marcas y Modelos</h2>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    <a href="/SegurosFrontEnd/presentation/administrador/menu/View.html" class="no-underline text-white">Volver al Menu</a>
+                    <a href="/SegurosFrontEnd/presentation/administrador/menu/View.html" class="no-underline text-white">Volver al Menú</a>
                 </button>
             </div>
 
             <div id="marcas-modelos"></div>
 
-            <div id="formulario-marca"></div>
+            <div id="formulario-marca" class="my-4 p-6 bg-white rounded-lg shadow-lg">
+                <h2 class="text-lg font-bold mb-4">Agregar Marca</h2>
+                <form id="marca-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="marca-nombre">Nombre:</label>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="marca-nombre" type="text" placeholder="Ingrese el nombre de la marca" required>
+                    </div>
+                    <div class="mb-4">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Agregar Marca</button>
+                    </div>
+                </form>
+            </div>
 
-            <div id="formulario-modelo"></div>
+            <div id="formulario-modelo" class="my-4 p-6 bg-white rounded-lg shadow-lg">
+                <h2 class="text-lg font-bold mb-4">Agregar Modelo</h2>
+                <form id="modelo-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="modelo-marca">Marca:</label>
+                        <select class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="modelo-marca" required>
+                            <option value="" disabled selected>Seleccione una marca</option>
+                            <!-- Aquí se generarán las opciones de las marcas -->
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="modelo-nombre">Nombre:</label>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="modelo-nombre" type="text" placeholder="Ingrese el nombre del modelo" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="modelo-imagen">Imagen:</label>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="modelo-imagen" type="text" placeholder="Ingrese la URL de la imagen" required>
+                    </div>
+                    <div class="mb-4">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Agregar Modelo</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
-        
+
         <div id="footer"></div>
         <script src="/SegurosFrontEnd/js/includes.js"></script>
         <script src="/SegurosFrontEnd/js/administrador.js"></script>
-        
+
     </body>
 </html>
+

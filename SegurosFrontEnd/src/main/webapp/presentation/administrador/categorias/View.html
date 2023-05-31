@@ -2,10 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <!-- Included Head HTML -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Administrador - Gestión de Categorías y Coberturas</title>
-        <!-- Tailwind CSS -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     </head>
     <body>
@@ -17,18 +15,55 @@
             <div class="flex items-center justify-between mb-4">
                 <h2>Listado de categorías y coberturas</h2>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    <a href="/SegurosFrontEnd/presentation/administrador/menu/View.html" class="no-underline text-white">Volver al Menu</a>
+                    <a href="/SegurosFrontEnd/presentation/administrador/menu/View.html" class="no-underline text-white">Volver al Menú</a>
                 </button>
             </div>
 
-            <!-- Aqui insertaremos dinamicamente las categorias y coberturas -->
+            <!-- Aquí se insertarán dinámicamente las categorías y coberturas -->
             <div id="categorias-coberturas"></div>
 
-            <!-- Aqui insertaremos dinamicamente el formulario de agregar categoria -->
-            <div id="formulario-categoria"></div>
+            <!-- Formulario de agregar categoría -->
+            <div id="formulario-categoria" class="my-4 p-6 bg-white rounded-lg shadow-lg">
+                <h2 class="text-lg font-bold mb-4">Agregar Categoría</h2>
+                <form id="categoria-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="categoria-descripcion">Descripción:</label>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="categoria-descripcion" type="text" placeholder="Ingrese la descripción de la categoría" required>
+                    </div>
+                    <div class="mb-4">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Agregar Categoría</button>
+                    </div>
+                </form>
+            </div>
 
-            <!-- Aqui insertaremos dinamicamente el formulario de agregar cobertura -->
-            <div id="formulario-cobertura"></div>
+            <!-- Formulario de agregar cobertura -->
+            <div id="formulario-cobertura" class="my-4 p-6 bg-white rounded-lg shadow-lg">
+                <h2 class="text-lg font-bold mb-4">Agregar Cobertura</h2>
+                <form id="cobertura-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="cobertura-categoria">Categoría:</label>
+                        <select class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cobertura-categoria" required>
+                            <option value="" disabled selected>Seleccione una categoría</option>
+                            <!-- Aquí se generarán las opciones de las categorías -->
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="cobertura-descripcion">Descripción:</label>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cobertura-descripcion" type="text" placeholder="Ingrese la descripción de la cobertura" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="cobertura-costo-minimo">Costo Mínimo:</label>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cobertura-costo-minimo" type="number" placeholder="Ingrese el costo mínimo de la cobertura" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="cobertura-costo-porcentual">Costo Porcentual:</label>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cobertura-costo-porcentual" type="number" placeholder="Ingrese el costo porcentual de la cobertura" required>
+                    </div>
+                    <div class="mb-4">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Agregar Cobertura</button>
+                    </div>
+                </form>
+            </div>
 
         </div>
         <div class="mt-5">
@@ -38,6 +73,6 @@
         <div id="footer"></div>
         <script src="/SegurosFrontEnd/js/includes.js"></script>
         <script src="/SegurosFrontEnd/js/administrador.js"></script>
-        
+
     </body>
 </html>

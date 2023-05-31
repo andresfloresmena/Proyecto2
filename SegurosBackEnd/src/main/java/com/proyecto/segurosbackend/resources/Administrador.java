@@ -33,10 +33,10 @@ public class Administrador {
     @POST
     @Path("/agregarCobertura")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response agregarCobertura(Cobertura cobertura) {
+    public Response agregarCobertura(Cobertura cobertura, Integer id) {
         try {
             // Agregar nueva cobertura con el servicio
-            Service.instance().agregarCobertura(cobertura.getCategoria().getId(),cobertura);
+            Service.instance().agregarCobertura(id,cobertura);
             return Response.ok().build();
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante la agregación de la cobertura
@@ -116,10 +116,10 @@ public class Administrador {
     @POST
     @Path("/agregarModelo")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response agregarModelo(Modelo modelo) {
+    public Response agregarModelo(Modelo modelo, Integer id) {
         try {
             // Agregar nueva categoría con el servicio
-            Service.instance().agregarModelo(modelo, modelo.getMarca().getId());
+            Service.instance().agregarModelo(modelo, id);
             return Response.ok().build();
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante la agregación de la categoría
