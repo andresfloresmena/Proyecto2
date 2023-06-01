@@ -1,6 +1,5 @@
 let backend = "http://localhost:8080/SegurosBackEnd/api";
 function getUserData() {
-    let userData = localStorage.getItem('user');
     if (userData) {
         return JSON.parse(userData);
     }

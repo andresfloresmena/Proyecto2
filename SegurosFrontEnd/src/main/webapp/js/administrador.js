@@ -1,4 +1,3 @@
-
 let backend = "http://localhost:8080/SegurosBackEnd/api";
 // Clientes y Polizas
 // 
@@ -445,6 +444,7 @@ async function fetchMarcas() {
     marcaTable.appendChild(marcaTableBody);
 
     marcasDiv.appendChild(marcaTable);
+    renderMarcas();
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
