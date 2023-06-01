@@ -1,5 +1,6 @@
 let backend = "http://localhost:8080/SegurosBackEnd/api";
 function getUserData() {
+    let userData = localStorage.getItem('user');
     if (userData) {
         return JSON.parse(userData);
     }
@@ -267,7 +268,7 @@ async function obtenerPolizasYCoberturas() {
                         <td class="border px-4 py-2">${policy.placa}</td>
                         <td class="border px-4 py-2">${policy.plazoPago}</td>
                         <td class="border px-4 py-2">${policy.auto}</td>
-                        <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${policy.auto.id}/imagen" style="width: 50px; height: 50px;"></td>
+                        <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${policy.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
                         <td class="border px-4 py-2">${policy.annio}</td>
                         <td class="border px-4 py-2">₡${policy.costoTotal}</td>
                     </tr>

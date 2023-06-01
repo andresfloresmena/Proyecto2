@@ -2,6 +2,145 @@ let backend = "http://localhost:8080/SegurosBackEnd/api";
 // Clientes y Polizas
 // 
 // Fetch all clients and their policies from the server
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    fetchMarcas().then(renderMarcas);
+});
+
+// Función para enviar el formulario de agregar marca
+async function enviarFormularioMarca(event) {
+    event.preventDefault();
+
+
+    const nombreMarca = document.getElementById('marca-nombre').value;
+
+    const nuevaMarca = {
+        nombre: nombreMarca,
+    };
+
+    try {
+
+        const response = await fetch(`${backend}/administrador/agregarMarca`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(nuevaMarca),
+        });
+
+        if (response.ok) {
+            // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
+            console.log('Formulario de marca enviado exitosamente');
+        } else {
+            // El formulario no se pudo enviar correctamente, puedes manejar el error de acuerdo a tus necesidades
+            console.error('Error al enviar el formulario de marca');
+        }
+    } catch (error) {
+        console.error('Error al enviar el formulario de marca:', error);
+    }
+
+    // Vuelve a obtener y renderizar las marcas después de enviar el formulario
+     fetchMarcas().then(renderMarcas);
+     obtenerMarcas();
+}
+
+// Función para enviar el formulario de agregar modelo
+async function enviarFormularioModelo(event) {
+    event.preventDefault();
+
+    const marca = document.getElementById('modelo-marca').value;
+    const nombreModelo = document.getElementById('modelo-nombre').value;
+    //const imagenModelo = document.getElementById('modelo-imagen').value;
+    const imagenModelo = document.getElementById('modelo-imagen').files[0];
+
+    const nuevoModelo = {
+        nombre: nombreModelo,
+    };
+
+    try {
+
+        const response = await fetch(`${backend}/administrador/agregarModelo?marca=${marca}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(nuevoModelo),
+        });
+
+
+        if (response.ok) {
+            // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
+            console.log('Formulario de modelo enviado exitosamente');
+        } else {
+            // El formulario no se pudo enviar correctamente, puedes manejar el error de acuerdo a tus necesidades
+            console.error('Error al enviar el formulario de modelo');
+        }
+    } catch (error) {
+        console.error('Error al enviar el formulario de modelo:', error);
+    }
+
+    // Obtener el nombre y la imagen del formulario
+
+
+// Crear un objeto FormData y agregar los datos
+    const formData = new FormData();
+    formData.append('flag', imagenModelo);
+
+// Realizar la solicitud POST utilizando fetch
+    fetch(`${backend}/administrador/${marca}/flag`, {
+        method: 'POST',
+        body: formData
+    })
+            .then(response => {
+                if (response.ok) {
+                    // La imagen se cargó exitosamente
+                    console.log('Imagen cargada exitosamente');
+                } else {
+                    // Error al cargar la imagen
+                    console.error('Error al cargar la imagen');
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar la imagen:', error);
+            });
+
+
+    // Vuelve a obtener y renderizar las marcas después de enviar el formulario
+    fetchMarcas().then(renderMarcas);
+}
+
+// Asignar los eventos de envío de formulario
+document.getElementById('marca-form').addEventListener('submit', enviarFormularioMarca);
+document.getElementById('modelo-form').addEventListener('submit', enviarFormularioModelo);
+
+
+// Función para obtener las marcas del backend y generar las opciones en el formulario de modelos
+async function obtenerMarcas() {
+    try {
+        const response = await fetch(`${backend}/administrador/obtenerMarcas`);
+
+        if (response.ok) {
+            const marcas = await response.json();
+
+            const selectMarca = document.getElementById('modelo-marca');
+
+            for (const marca of marcas) {
+                const option = document.createElement('option');
+                option.value = marca.id;
+                option.text = marca.nombre;
+                selectMarca.appendChild(option);
+            }
+        } else {
+            console.error('Error al obtener las marcas');
+        }
+    } catch (error) {
+        console.error('Error al obtener las marcas:', error);
+    }
+}
+
+// Llamar a la función para obtener las marcas al cargar la página
+document.addEventListener('DOMContentLoaded', obtenerMarcas);
+
 async function fetchClientesYPolizas() {
     const response = await fetch(`${backend}/administrador/clientesYPolizas`);
     const clientesYPolizas = await response.json();
@@ -133,10 +272,6 @@ function renderClientesYPolizas(clientesYPolizas) {
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchClientesYPolizas().then(renderClientesYPolizas);
 });
-
-
-
-
 
 async function fetchCategorias() {
     const response = await fetch(`${backend}/administrador/obtenerCategorias`);
@@ -326,12 +461,12 @@ async function enviarFormularioCobertura(event) {
 
     fetchCategorias().then(renderCategorias);
 
-
+    obtenerCategorias();
 }
 
 // Asignar los eventos de envío de formulario
-document.getElementById('cobertura-form').addEventListener('submit', enviarFormularioCategoria);
-document.getElementById('categoria-form').addEventListener('submit', enviarFormularioCobertura);
+document.getElementById('categoria-form').addEventListener('submit', enviarFormularioCategoria);
+document.getElementById('cobertura-form').addEventListener('submit', enviarFormularioCobertura);
 
 
 // Función para obtener las categorías del backend y generar las opciones en el formulario de cobertura
@@ -362,11 +497,14 @@ async function obtenerCategorias() {
 document.addEventListener('DOMContentLoaded', obtenerCategorias);
 
 
-
-
 async function fetchMarcas() {
     const response = await fetch(`${backend}/administrador/obtenerMarcas`);
     const marcas = await response.json();
+    return marcas;
+}
+
+function renderMarcas(marcas) {
+   
 
     const marcasDiv = document.getElementById('marcas-modelos');
     marcasDiv.innerHTML = '';
@@ -426,7 +564,7 @@ async function fetchMarcas() {
             modeloTableRow.innerHTML = `
         <td class="px-3 py-2 whitespace-no-wrap">${modelo.id}</td>
         <td class="px-3 py-2 whitespace-no-wrap">${modelo.nombre}</td>
-        <td class="px-3 py-2 whitespace-no-wrap"><img class="imagen" src="${backend}/administrador/${modelo.id}/imagen" style="width: 50px; height: 50px;"></td>
+        <td class="px-3 py-2 whitespace-no-wrap"><img class="imagen" src="${backend}/administrador/${marca.id}/imagen" style="width: 50px; height: 50px;"></td>
       `;
             modelosTableBody.appendChild(modeloTableRow);
         }
@@ -444,148 +582,8 @@ async function fetchMarcas() {
     marcaTable.appendChild(marcaTableBody);
 
     marcasDiv.appendChild(marcaTable);
-    renderMarcas();
-}
+};
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    fetchMarcas();
-});
-
-
-
-// Función para enviar el formulario de agregar marca
-async function enviarFormularioMarca(event) {
-    event.preventDefault();
-
-    const nombreMarca = document.getElementById('marca-nombre').value;
-
-    const nuevaMarca = {
-        nombre: nombreMarca,
-    };
-
-    try {
-
-        const response = await fetch(`${backend}/administrador/agregarMarca`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(nuevaMarca),
-        });
-
-        if (response.ok) {
-            // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
-            console.log('Formulario de marca enviado exitosamente');
-        } else {
-            // El formulario no se pudo enviar correctamente, puedes manejar el error de acuerdo a tus necesidades
-            console.error('Error al enviar el formulario de marca');
-        }
-    } catch (error) {
-        console.error('Error al enviar el formulario de marca:', error);
-    }
-
-    // Vuelve a obtener y renderizar las marcas después de enviar el formulario
-    await fetchMarcas();
-    renderMarcas();
-}
-
-// Función para enviar el formulario de agregar modelo
-async function enviarFormularioModelo(event) {
-    event.preventDefault();
-
-    const marca = document.getElementById('modelo-marca').value;
-    const nombreModelo = document.getElementById('modelo-nombre').value;
-    //const imagenModelo = document.getElementById('modelo-imagen').value;
-    const imagenModelo = document.getElementById('modelo-imagen').files[0];
-
-    const nuevoModelo = {
-        nombre: nombreModelo,
-    };
-
-    try {
-
-        const response = await fetch(`${backend}/administrador/agregarModelo?marca=${marca}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(nuevoModelo),
-        });
-
-
-        if (response.ok) {
-            // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
-            console.log('Formulario de modelo enviado exitosamente');
-        } else {
-            // El formulario no se pudo enviar correctamente, puedes manejar el error de acuerdo a tus necesidades
-            console.error('Error al enviar el formulario de modelo');
-        }
-    } catch (error) {
-        console.error('Error al enviar el formulario de modelo:', error);
-    }
-
-    // Obtener el nombre y la imagen del formulario
-
-
-// Crear un objeto FormData y agregar los datos
-    const formData = new FormData();
-    formData.append('flag', imagenModelo);
-
-// Realizar la solicitud POST utilizando fetch
-    fetch(`${backend}/${marca}/flag`, {
-        method: 'POST',
-        body: formData
-    })
-            .then(response => {
-                if (response.ok) {
-                    // La imagen se cargó exitosamente
-                    console.log('Imagen cargada exitosamente');
-                } else {
-                    // Error al cargar la imagen
-                    console.error('Error al cargar la imagen');
-                }
-            })
-            .catch(error => {
-                console.error('Error al cargar la imagen:', error);
-            });
-
-
-    // Vuelve a obtener y renderizar las marcas después de enviar el formulario
-    await fetchMarcas();
-    renderMarcas();
-}
-
-// Asignar los eventos de envío de formulario
-document.getElementById('marca-form').addEventListener('submit', enviarFormularioMarca);
-document.getElementById('modelo-form').addEventListener('submit', enviarFormularioModelo);
-
-
-// Función para obtener las marcas del backend y generar las opciones en el formulario de modelos
-async function obtenerMarcas() {
-    try {
-        const response = await fetch(`${backend}/administrador/obtenerMarcas`);
-
-        if (response.ok) {
-            const marcas = await response.json();
-
-            const selectMarca = document.getElementById('modelo-marca');
-
-            for (const marca of marcas) {
-                const option = document.createElement('option');
-                option.value = marca.id;
-                option.text = marca.nombre;
-                selectMarca.appendChild(option);
-            }
-        } else {
-            console.error('Error al obtener las marcas');
-        }
-    } catch (error) {
-        console.error('Error al obtener las marcas:', error);
-    }
-}
-
-// Llamar a la función para obtener las marcas al cargar la página
-document.addEventListener('DOMContentLoaded', obtenerMarcas);
 
 
 

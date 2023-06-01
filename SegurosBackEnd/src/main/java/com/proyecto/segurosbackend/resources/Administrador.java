@@ -32,7 +32,7 @@ public class Administrador {
     @POST
     @Path("/agregarCobertura")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response agregarCobertura(Cobertura cobertura, @QueryParam("categoria") String id) {
+    public Response agregarCobertura(@QueryParam("categoria") String id, Cobertura cobertura) {
         try {
             int ident = Integer.parseInt(id);
             Service.instance().agregarCobertura(ident, cobertura);
@@ -114,7 +114,7 @@ public class Administrador {
     @POST
     @Path("/agregarModelo")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response agregarModelo(Modelo modelo, @QueryParam("marca") String id) {
+    public Response agregarModelo(@QueryParam("marca") String id, Modelo modelo) {
         try {
             int ident = Integer.parseInt(id);
             Service.instance().agregarModelo(modelo, ident);
