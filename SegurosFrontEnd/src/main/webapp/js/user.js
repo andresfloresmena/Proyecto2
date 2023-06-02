@@ -441,13 +441,47 @@ function esconderFormsAdminCoberturas(){
     }
 };
 
+function esconderFormsClientePolizas(){
+    const cliPolizas = document.getElementById('cliPolizas');
+    
+    if (!userGlobal || userGlobal.cedula === '') {
+        // Si no hay usuario logueado, ocultar elementos
+        cliPolizas.style.display = 'none';
+        alert('Error: Usuario no logueado');
+    }
+};
+
+function esconderFormsDatos(){
+    const actualizacionDatos = document.getElementById('actualizacionDatos');
+    
+    if (!userGlobal || userGlobal.cedula === '') {
+        // Si no hay usuario logueado, ocultar elementos
+        actualizacionDatos.style.display = 'none';
+        alert('Error: Usuario no logueado');
+    }
+};
+
+function esconderMenu(){
+    const menu = document.getElementById('menu');
+    
+    if (!userGlobal || userGlobal.cedula === '') {
+        // Si no hay usuario logueado, ocultar elementos
+        menu.style.display = 'none';
+        alert('Error: Usuario no logueado');
+    }
+};
+
 document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
 document.addEventListener('DOMContentLoaded', obtenerPolizas);
 document.addEventListener('DOMContentLoaded', obtenerPolizasYCoberturas);
 document.addEventListener('DOMContentLoaded', esconderFormsAdminMarcas);
 document.addEventListener('DOMContentLoaded', esconderFormsAdminClientes);
 document.addEventListener('DOMContentLoaded', esconderFormsAdminCoberturas);
+document.addEventListener('DOMContentLoaded', esconderFormsClientePolizas);
+document.addEventListener('DOMContentLoaded', esconderFormsDatos);
+document.addEventListener('DOMContentLoaded', esconderMenu);
 
 const form = document.getElementById('findPolizasForm'); // Asegúrate de reemplazar 'form-id' por el ID de tu formulario
 form.addEventListener('submit', (event) => obtenerPolizasPorPlaca(event, form.placa.value));
+
 

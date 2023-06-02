@@ -9,36 +9,38 @@
     <body>
 
         <div id="header"></div>
-
-        <form method="post" action="/SegurosFrontEnd/presentation/cliente/polizas/View.html" class="container mx-auto my-8 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 gap-6">
-                <div>
-                    <label for="nombreFld" class="block text-sm font-medium text-gray-700">Nombre:</label>
-                    <input type="text" id="nombreFld" name="nombreFld" value="" placeholder="Nombre del usuario" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+        
+        <div id="actualizacionDatos">
+            <form  method="post" action="/SegurosFrontEnd/presentation/cliente/polizas/View.html" class="container mx-auto my-8 px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 gap-6">
+                    <div>
+                        <label for="nombreFld" class="block text-sm font-medium text-gray-700">Nombre:</label>
+                        <input type="text" id="nombreFld" name="nombreFld" value="" placeholder="Nombre del usuario" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono:</label>
+                        <input type="tel" id="telefono" name="telefono" value="" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label for="correo" class="block text-sm font-medium text-gray-700">Correo electrónico:</label>
+                        <input type="email" id="correo" name="correo" value="" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label for="tarjeta" class="block text-sm font-medium text-gray-700">Número de tarjeta:</label>
+                        <input type="text" id="tarjeta" name="tarjeta" value="" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label for="clave" class="block text-sm font-medium text-gray-700">Clave:</label>
+                        <input type="password" id="clave" name="clave" value="" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <button onclick="actualizarDatosCliente()" id="actualizar" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer">
+                            Actualizar
+                        </button>
+                    </div>
                 </div>
-                <div>
-                    <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono:</label>
-                    <input type="tel" id="telefono" name="telefono" value="" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                </div>
-                <div>
-                    <label for="correo" class="block text-sm font-medium text-gray-700">Correo electrónico:</label>
-                    <input type="email" id="correo" name="correo" value="" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                </div>
-                <div>
-                    <label for="tarjeta" class="block text-sm font-medium text-gray-700">Número de tarjeta:</label>
-                    <input type="text" id="tarjeta" name="tarjeta" value="" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                </div>
-                <div>
-                    <label for="clave" class="block text-sm font-medium text-gray-700">Clave:</label>
-                    <input type="password" id="clave" name="clave" value="" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                </div>
-                <div>
-                    <button onclick="actualizarDatosCliente()" id="actualizar" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer">
-                        Actualizar
-                    </button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
 
         <div id="footer"></div>
         <script src="/SegurosFrontEnd/js/includes.js"></script>
