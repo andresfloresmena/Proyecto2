@@ -412,9 +412,41 @@ async function logout() {
   }
 }
 
+function esconderFormsAdminMarcas(){
+    const admMarcas = document.getElementById('admMarcas');
+    
+    if (!userGlobal || userGlobal.cedula === '') {
+        // Si no hay usuario logueado, ocultar elementos
+        admMarcas.style.display = 'none';
+        alert('Error: Usuario no logueado');
+    }
+};
+
+function esconderFormsAdminClientes(){
+    const admClientes = document.getElementById('admClientes');
+    
+    if (!userGlobal || userGlobal.cedula === '') {
+        admClientes.style.display = 'none';
+        alert('Error: Usuario no logueado');
+    }
+};
+
+function esconderFormsAdminCoberturas(){
+    const admCoberturas = document.getElementById('admCoberturas');
+    
+    if (!userGlobal || userGlobal.cedula === '') {
+        // Si no hay usuario logueado, ocultar elementos
+        admCoberturas.style.display = 'none';
+        alert('Error: Usuario no logueado');
+    }
+};
+
 document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
 document.addEventListener('DOMContentLoaded', obtenerPolizas);
 document.addEventListener('DOMContentLoaded', obtenerPolizasYCoberturas);
+document.addEventListener('DOMContentLoaded', esconderFormsAdminMarcas);
+document.addEventListener('DOMContentLoaded', esconderFormsAdminClientes);
+document.addEventListener('DOMContentLoaded', esconderFormsAdminCoberturas);
 
 const form = document.getElementById('findPolizasForm'); // Asegúrate de reemplazar 'form-id' por el ID de tu formulario
 form.addEventListener('submit', (event) => obtenerPolizasPorPlaca(event, form.placa.value));

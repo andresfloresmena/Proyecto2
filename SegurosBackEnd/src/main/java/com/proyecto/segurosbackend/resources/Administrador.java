@@ -5,22 +5,21 @@
 package com.proyecto.segurosbackend.resources;
 
 import com.proyecto.segurosbackend.logic.Categoria;
-import com.proyecto.segurosbackend.logic.Cliente;
 import jakarta.ws.rs.Path;
 import com.proyecto.segurosbackend.logic.Cobertura;
 import com.proyecto.segurosbackend.logic.Marca;
 import com.proyecto.segurosbackend.logic.Modelo;
-import com.proyecto.segurosbackend.logic.Poliza;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import com.proyecto.segurosbackend.logic.Service;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 
 /**
@@ -31,9 +30,12 @@ import java.util.List;
 @Path("/administrador")
 @PermitAll
 public class Administrador {
+    @Context
+    HttpServletRequest request;
 
     @POST
     @Path("/agregarCobertura")
+    @RolesAllowed({"ADM"})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarCobertura(@QueryParam("categoria") String id, Cobertura cobertura) {
         try {
@@ -47,6 +49,7 @@ public class Administrador {
 
     @POST
     @Path("/agregarCategoria")
+    @RolesAllowed({"ADM"})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarCategoria(Categoria categoria) {
         try {
@@ -63,6 +66,7 @@ public class Administrador {
     
     @GET
     @Path("/obtenerCategorias")
+    @RolesAllowed({"ADM"})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response obtenerCategorias() {
         try {
@@ -76,6 +80,7 @@ public class Administrador {
 
     @GET
     @Path("/clientesYPolizas")
+    @RolesAllowed({"ADM"})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response obtenerClientesPolizas() {
         try {
@@ -89,6 +94,7 @@ public class Administrador {
 
     @GET
     @Path("/obtenerMarcas")
+    @RolesAllowed({"ADM"})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response obtenerMarcas() {
         try {
@@ -102,6 +108,7 @@ public class Administrador {
 
     @POST
     @Path("/agregarMarca")
+    @RolesAllowed({"ADM"})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarMarca(Marca marca) {
         try {
@@ -116,6 +123,7 @@ public class Administrador {
 
     @POST
     @Path("/agregarModelo")
+    @RolesAllowed({"ADM"})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarModelo(@QueryParam("marca") String id, Modelo modelo) {
         try {
@@ -130,6 +138,7 @@ public class Administrador {
     public static final String LOCATION = "C:/AAA/proyecto/";
     @GET
     @Path("{name}/imagen")
+    @RolesAllowed({"ADM"})
     @Produces("image/png")
     public Response readImage(@PathParam("name") String name) throws IOException {
         File file = new File(LOCATION + name);
@@ -141,6 +150,7 @@ public class Administrador {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Path("{name}/flag")
+    @RolesAllowed({"ADM"})
     public void createImage(@PathParam("name") String name, @FormParam("flag") InputStream in) {
         try {
             OutputStream out = new FileOutputStream(new File(LOCATION + name));
@@ -153,15 +163,11 @@ public class Administrador {
     
     @GET
     @Path("/PolizaCobertura")
+    @RolesAllowed({"ADM"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerPolizaCobertura(@QueryParam("idPoliza") String idPoliza) {
         try {
-            
-                
             return Response.ok(Service.instance().coberturaPoliza(Integer.parseInt(idPoliza))).build();
-                
-            
-            
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las pólizas
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

@@ -243,3 +243,4 @@ function renderMarcas(marcas) {
 
     marcasDiv.appendChild(scrollableDiv);
 };
+
