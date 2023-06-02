@@ -12,8 +12,9 @@ function renderCategorias(categorias) {
 
     // Add a div to hold the table with scrolling ability
     const scrollableDiv = document.createElement('div');
-    scrollableDiv.style.overflowX = 'auto';  // Enable horizontal scrolling
-    scrollableDiv.style.overflowY = 'auto';  // Enable vertical scrolling
+    scrollableDiv.style.width = '100%';  // Adjust as needed
+    scrollableDiv.style.height = '500px';  // Adjust as needed
+    scrollableDiv.style.overflow = 'auto';  // Enable scrolling when necessary
 
     // Create a table for all categories and their coverages
     const categoriasTable = document.createElement('table');

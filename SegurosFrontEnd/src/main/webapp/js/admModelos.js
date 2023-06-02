@@ -162,9 +162,10 @@ function renderMarcas(marcas) {
 
     // Add a div to hold the table with scrolling ability
     const scrollableDiv = document.createElement('div');
-    scrollableDiv.style.overflowX = 'auto';  // Enable horizontal scrolling
-    scrollableDiv.style.overflowY = 'auto';  // Enable vertical scrolling
-
+    scrollableDiv.style.width = '100%';  // Adjust as needed
+    scrollableDiv.style.height = '500px';  // Adjust as needed
+    scrollableDiv.style.overflow = 'auto';  // Enable scrolling when necessary
+    
     const marcaTable = document.createElement('table');
     marcaTable.className = 'table-auto w-full text-gray-700 divide-y divide-gray-200';
 

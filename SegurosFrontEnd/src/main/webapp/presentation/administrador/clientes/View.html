@@ -33,27 +33,33 @@
 
         <!-- Modal -->
 
-        <div id="modalCoberturas" class="modal">
-            <div class="modal-content">
-                <h2 id="tituloModal"></h2>
-                <table id="tablaCoberturas">
-                    <thead>
-                        <tr>
-                            <th>Descripción</th>
-                            <th>Costo mínimo</th>
-                            <th>Costo porcentual</th>
-                        </tr>
-                    </thead>
-                    <tbody id="infoCoberturas"></tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button id="cerrarModal">Cerrar</button>
+        <div id="modalCoberturas" class="fixed inset-0 flex items-center justify-center z-50 hidden overflow-auto bg-black bg-opacity-50">
+            <div class="w-full max-w-screen-lg overflow-auto bg-white rounded-md">
+                <div class="p-6">
+                    <h2 id="tituloModal" class="text-2xl font-bold text-center text-blue-700"></h2>
+                    <div class="mt-4 overflow-auto">
+                        <table id="tablaCoberturas" class="w-full table-fixed">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 font-semibold text-gray-800 border border-gray-200">Descripción</th>
+                                    <th class="px-4 py-2 font-semibold text-gray-800 border border-gray-200">Costo mínimo</th>
+                                    <th class="px-4 py-2 font-semibold text-gray-800 border border-gray-200">Costo porcentual</th>
+                                </tr>
+                            </thead>
+                            <tbody id="infoCoberturas" class="text-gray-700"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="px-6 py-4 bg-gray-100 text-right">
+                    <button id="cerrarModal" class="px-4 py-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-600">Cerrar</button>
+                </div>
             </div>
         </div>
 
 
+
         <div id="footer"></div>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <script src="/SegurosFrontEnd/js/includes.js"></script>
         <script src="/SegurosFrontEnd/js/admCliente.js"></script>
         <script src="/SegurosFrontEnd/js/user.js"></script>

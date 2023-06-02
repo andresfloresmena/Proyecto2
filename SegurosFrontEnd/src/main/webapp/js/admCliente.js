@@ -12,8 +12,9 @@ function renderClientesYPolizas(clientesYPolizas) {
 
     // Add a div to hold the table with scrolling ability
     const scrollableDiv = document.createElement('div');
-    scrollableDiv.style.overflowX = 'auto';  // Enable horizontal scrolling
-    scrollableDiv.style.overflowY = 'auto';  // Enable vertical scrolling
+    scrollableDiv.style.width = '100%';  // Adjust as needed
+    scrollableDiv.style.height = '500px';  // Adjust as needed
+    scrollableDiv.style.overflow = 'auto';  // Enable scrolling when necessary
 
     // Create a table for all clients and their policies
     const clientesPolizasTable = document.createElement('table');
@@ -65,6 +66,7 @@ function renderClientesYPolizas(clientesYPolizas) {
         <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Auto</th>
         <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Año</th>
         <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Costo Total</th>
+        <th class="px-3 py-2 text-xs leading-4 font-medium uppercase tracking-wider">Coberturas</th>  <!-- Añadir esta línea -->
       </tr>
     `;
 
@@ -114,9 +116,10 @@ function renderClientesYPolizas(clientesYPolizas) {
                 iconCell.className = 'px-3 py-2 whitespace-no-wrap';
 
                 const iconButton = document.createElement('button');
-                iconButton.className = 'fas fa-info-circle';
+                iconButton.className = 'fas fa-info-circle';  // Asegurarte de que tienes Font Awesome en tu archivo HTML
+                iconButton.style.color = 'blue';  // Esto hace que el icono sea azul
                 iconButton.addEventListener('click', function () {
-                    abrirModalCoberturas(poliza.idPoliza);
+                    abrirModalCoberturas(poliza.idPoliza.toString());
                 });
 
                 iconCell.appendChild(iconButton);
@@ -152,10 +155,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchClientesYPolizas().then(renderClientesYPolizas);
 });
 
-
 async function abrirModalCoberturas(idPoliza) {
     try {
-        const coverageResponse = await fetch(`${backend}/polizas/PolizaCobertura?idPoliza=${encodeURIComponent(idPoliza)}`, {
+        const coverageResponse = await fetch(`${backend}/administrador/PolizaCobertura?idPoliza=${encodeURIComponent(idPoliza)}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         });
@@ -173,15 +175,15 @@ async function abrirModalCoberturas(idPoliza) {
             coverages.forEach(function (coverage) {
                 infoCoberturas.innerHTML += `
           <tr>
-            <td>${coverage.descripcion}</td>
-            <td>₡${coverage.costoMinimo}</td>
-            <td>${coverage.costoPorcentual}%</td>
+            <td class="px-4 py-2 border border-gray-200">${coverage.descripcion}</td>
+            <td class="px-4 py-2 border border-gray-200">₡${coverage.costoMinimo}</td>
+            <td class="px-4 py-2 border border-gray-200">${coverage.costoPorcentual}%</td>
           </tr>
         `;
             });
 
             // Mostrar el modal
-            document.getElementById('modalCoberturas').style.display = 'block';
+            document.getElementById('modalCoberturas').style.display = 'flex';
         } else {
             console.error('Error al obtener las coberturas:', coverageResponse.status);
         }

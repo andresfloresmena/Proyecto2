@@ -5,10 +5,12 @@
 package com.proyecto.segurosbackend.resources;
 
 import com.proyecto.segurosbackend.logic.Categoria;
+import com.proyecto.segurosbackend.logic.Cliente;
 import jakarta.ws.rs.Path;
 import com.proyecto.segurosbackend.logic.Cobertura;
 import com.proyecto.segurosbackend.logic.Marca;
 import com.proyecto.segurosbackend.logic.Modelo;
+import com.proyecto.segurosbackend.logic.Poliza;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import com.proyecto.segurosbackend.logic.Service;
@@ -18,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 
 /**
@@ -145,6 +148,23 @@ public class Administrador {
             out.close();
         } catch (Exception ex) {
             throw new NotAcceptableException();
+        }
+    }
+    
+    @GET
+    @Path("/PolizaCobertura")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPolizaCobertura(@QueryParam("idPoliza") String idPoliza) {
+        try {
+            
+                
+            return Response.ok(Service.instance().coberturaPoliza(Integer.parseInt(idPoliza))).build();
+                
+            
+            
+        } catch (Exception e) {
+            // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las pólizas
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
