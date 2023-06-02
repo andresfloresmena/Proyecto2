@@ -1,4 +1,4 @@
-let backend = "http://localhost:8080/SegurosBackEnd/api";
+
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchMarcas().then(renderMarcas);
 });

@@ -1,4 +1,4 @@
-let backend = "http://localhost:8080/SegurosBackEnd/api";
+
 async function fetchClientesYPolizas() {
     const response = await fetch(`${backend}/administrador/clientesYPolizas`);
     const clientesYPolizas = await response.json();

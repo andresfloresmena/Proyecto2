@@ -314,25 +314,19 @@ async function actualizarDatosCliente() {
     let correo = document.getElementById('correo').value;
     let tarjeta = document.getElementById('tarjeta').value;
     let clave = document.getElementById('clave').value;
-    let cliente = {
-        cedula: userGlobal.cedula,
-        nombre: nombre,
-        usuario: {
-            cedula: userGlobal.cedula,
-            clave: clave,
-            nombre: nombre,
-            telefono: telefono,
-            correo: correo,
-            datos_tarjeta: tarjeta
-        }
-    };
-    setUserData(cliente);
+    userGlobal.nombre = nombre;
+    userGlobal.usuario.nombre = nombre;
+    userGlobal.usuario.clave = clave;
+    userGlobal.usuario.telefono = telefono;
+    userGlobal.usuario.correo = correo;
+    userGlobal.usuario.datos_tarjeta = tarjeta;
+    setUserData(userGlobal);
     let request = new Request(`${backend}/actualizarDatosCliente`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(cliente)
+        body: JSON.stringify(userGlobal)
     });
     try {
         let response = await fetch(request);
@@ -343,7 +337,6 @@ async function actualizarDatosCliente() {
         let data = await response.json();
         console.log('Datos del cliente actualizados:', data);
         obtenerDatosCliente();
-        ocultarElementosHeader();
     } catch (error) {
         console.error('Error:', error);
     }
@@ -419,13 +412,6 @@ async function logout() {
   }
 }
 
-
-function loaded() {
-    document.getElementById('registrar').addEventListener('click', e => registrar());
-
-}
-
-document.addEventListener("DOMContentLoaded", loaded);
 document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
 document.addEventListener('DOMContentLoaded', obtenerPolizas);
 document.addEventListener('DOMContentLoaded', obtenerPolizasYCoberturas);

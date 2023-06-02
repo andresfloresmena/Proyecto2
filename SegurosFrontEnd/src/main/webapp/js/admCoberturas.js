@@ -1,4 +1,4 @@
-let backend = "http://localhost:8080/SegurosBackEnd/api";
+
 async function fetchCategorias() {
     const response = await fetch(`${backend}/administrador/obtenerCategorias`);
     const categorias = await response.json();
