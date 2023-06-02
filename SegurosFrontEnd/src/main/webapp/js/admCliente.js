@@ -10,6 +10,11 @@ function renderClientesYPolizas(clientesYPolizas) {
     const clientesPolizasDiv = document.getElementById('clientes-polizas');
     clientesPolizasDiv.innerHTML = '';  // Clear the div
 
+    // Add a div to hold the table with scrolling ability
+    const scrollableDiv = document.createElement('div');
+    scrollableDiv.style.overflowX = 'auto';  // Enable horizontal scrolling
+    scrollableDiv.style.overflowY = 'auto';  // Enable vertical scrolling
+
     // Create a table for all clients and their policies
     const clientesPolizasTable = document.createElement('table');
     clientesPolizasTable.className = 'table-auto w-full text-gray-700 divide-y divide-gray-200';
@@ -104,6 +109,19 @@ function renderClientesYPolizas(clientesYPolizas) {
                 costoTotalCell.textContent = `₡${poliza.costoTotal}`;
                 polizaRow.appendChild(costoTotalCell);
 
+                // Creación del icono con controlador de eventos de clic
+                const iconCell = document.createElement('td');
+                iconCell.className = 'px-3 py-2 whitespace-no-wrap';
+
+                const iconButton = document.createElement('button');
+                iconButton.className = 'fas fa-info-circle';
+                iconButton.addEventListener('click', function () {
+                    abrirModalCoberturas(poliza.idPoliza);
+                });
+
+                iconCell.appendChild(iconButton);
+                polizaRow.appendChild(iconCell);
+
                 polizasTableBody.appendChild(polizaRow);
             }
 
@@ -125,10 +143,56 @@ function renderClientesYPolizas(clientesYPolizas) {
 
     clientesPolizasTable.appendChild(tableHead);
     clientesPolizasTable.appendChild(tableBody);
-    clientesPolizasDiv.appendChild(clientesPolizasTable);
+    scrollableDiv.appendChild(clientesPolizasTable);
+    clientesPolizasDiv.appendChild(scrollableDiv);
 }
 
 // Fetch and render clients when the page is loaded
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchClientesYPolizas().then(renderClientesYPolizas);
 });
+
+
+async function abrirModalCoberturas(idPoliza) {
+    try {
+        const coverageResponse = await fetch(`${backend}/polizas/PolizaCobertura?idPoliza=${encodeURIComponent(idPoliza)}`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        if (coverageResponse.ok) {
+            const coverages = await coverageResponse.json();
+            const tituloModal = document.getElementById('tituloModal');
+            const infoCoberturas = document.getElementById('infoCoberturas');
+
+            // Vaciar la tabla de coberturas para asegurarse de que no hay filas de una apertura anterior del modal
+            infoCoberturas.innerHTML = '';
+
+            // Llenar el título del modal y la tabla de coberturas
+            tituloModal.textContent = `Coberturas de la póliza ${idPoliza}`;
+            coverages.forEach(function (coverage) {
+                infoCoberturas.innerHTML += `
+          <tr>
+            <td>${coverage.descripcion}</td>
+            <td>₡${coverage.costoMinimo}</td>
+            <td>${coverage.costoPorcentual}%</td>
+          </tr>
+        `;
+            });
+
+            // Mostrar el modal
+            document.getElementById('modalCoberturas').style.display = 'block';
+        } else {
+            console.error('Error al obtener las coberturas:', coverageResponse.status);
+        }
+    } catch (error) {
+        // Error en la solicitud o en la lógica de obtener las coberturas
+        console.error('Error al obtener las coberturas:', error);
+    }
+}
+
+// Agregar un controlador de eventos para el botón de cerrar el modal
+document.getElementById('cerrarModal').addEventListener('click', function () {
+    document.getElementById('modalCoberturas').style.display = 'none';
+});
+

@@ -157,10 +157,13 @@ async function fetchMarcas() {
 }
 
 function renderMarcas(marcas) {
-
-
     const marcasDiv = document.getElementById('marcas-modelos');
     marcasDiv.innerHTML = '';
+
+    // Add a div to hold the table with scrolling ability
+    const scrollableDiv = document.createElement('div');
+    scrollableDiv.style.overflowX = 'auto';  // Enable horizontal scrolling
+    scrollableDiv.style.overflowY = 'auto';  // Enable vertical scrolling
 
     const marcaTable = document.createElement('table');
     marcaTable.className = 'table-auto w-full text-gray-700 divide-y divide-gray-200';
@@ -234,6 +237,8 @@ function renderMarcas(marcas) {
 
     marcaTable.appendChild(marcaTableBody);
 
-    marcasDiv.appendChild(marcaTable);
-};
+    // Add the table to the scrollable div
+    scrollableDiv.appendChild(marcaTable);
 
+    marcasDiv.appendChild(scrollableDiv);
+};

@@ -10,6 +10,11 @@ function renderCategorias(categorias) {
     const categoriasDiv = document.getElementById('categorias-coberturas');
     categoriasDiv.innerHTML = '';  // Clear the div
 
+    // Add a div to hold the table with scrolling ability
+    const scrollableDiv = document.createElement('div');
+    scrollableDiv.style.overflowX = 'auto';  // Enable horizontal scrolling
+    scrollableDiv.style.overflowY = 'auto';  // Enable vertical scrolling
+
     // Create a table for all categories and their coverages
     const categoriasTable = document.createElement('table');
     categoriasTable.className = 'table-auto w-full text-gray-700 divide-y divide-gray-200';
@@ -105,7 +110,8 @@ function renderCategorias(categorias) {
 
     categoriasTable.appendChild(tableHead);
     categoriasTable.appendChild(tableBody);
-    categoriasDiv.appendChild(categoriasTable);
+    scrollableDiv.appendChild(categoriasTable);
+    categoriasDiv.appendChild(scrollableDiv);
 }
 
 // Fetch and render categories when the page is loaded
