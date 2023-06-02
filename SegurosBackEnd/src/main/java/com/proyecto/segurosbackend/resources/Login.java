@@ -53,7 +53,7 @@ public class Login {
         return null;
     }
 
-    @POST
+    @DELETE
     @Path("/logout")
     public Response logout() {
         HttpSession session = request.getSession(true);

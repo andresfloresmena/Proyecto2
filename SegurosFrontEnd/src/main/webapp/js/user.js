@@ -374,8 +374,14 @@ function ocultarElementosHeader() {
         datosElement.style.display = 'none';
         logoutElement.style.display = 'none';
         loginElement.style.display = 'block';
-    } else {
-        // Si hay un usuario logueado, ocultar elementos del encabezado
+    }else if(userGlobal.usuario.tipo === 2){
+        // Si hay un usuario admin logueado, ocultar elementos del encabezado
+        polizasElement.style.display = 'none';
+        loginElement.style.display = 'none';
+        logoutElement.style.display = 'block';
+        datosElement.style.display = 'block';
+    }else if (userGlobal.usuario.tipo === 1){
+        // Si hay un usuario cliente logueado, ocultar elementos del encabezado
         polizasElement.style.display = 'block';
         datosElement.style.display = 'block';
         logoutElement.style.display = 'block';
@@ -383,11 +389,36 @@ function ocultarElementosHeader() {
     }
 }
 
-function logout() {
+async function logout() {
+  try {
+    
+
+    // Enviar una solicitud al servidor para realizar el logout
+    const response = await fetch(`${backend}/login/logout`, {
+      method: 'DELETE'
+    });
+
+    if (response.ok) {
+      const responseText = await response.text();
+      // Desconexión exitosa
+      console.log('Desconexión exitosa:', responseText);
+      // Limpiar localStorage
     localStorage.clear();
-    userGlobal = {}; // Limpiar los datos en userGlobal
+
+    // Limpiar los datos en userGlobal
+    userGlobal = {};
+
+    // Ocultar elementos del encabezado
     ocultarElementosHeader();
+    } else {
+      throw new Error('Error al desconectar');
+    }
+  } catch (error) {
+    // Ocurrió un error durante la desconexión
+    console.error('Error al desconectar:', error);
+  }
 }
+
 
 function loaded() {
     document.getElementById('registrar').addEventListener('click', e => registrar());

@@ -58,10 +58,14 @@ public class Service {
         try {
         // Obtenemos el objeto Usuario mediante la cédula ingresada
         Usuario usuario = usuarioDao.read(cedula);
+        Cliente cliente = new Cliente();
+        Cliente clienteFinal = new Cliente();
         if(usuario != null) {
             // Verificamos que la clave ingresada sea igual a la clave almacenada en el objeto Usuario
             if(clave.equals(usuario.getClave())) {
-                return clienteFind(usuario);
+                cliente = clienteFind(usuario);
+                clienteFinal = polizaFind(cliente);
+                return clienteFinal;
             } else {
                 // Si las claves no coinciden, devolvemos null
                 return null;
@@ -120,7 +124,11 @@ public class Service {
     }
     
     public List<Cliente> allClientes() throws Exception{
-        return clienteDao.obtenerTodosLosClientes();
+        List<Cliente> clientes = clienteDao.obtenerTodosLosClientes();
+        for (Cliente cliente : clientes) {
+        cliente.setUsuario(usuarioFindByCedula(cliente.getCedula()));
+        }
+        return clientes;
     }
 
     public Usuario usuarioFindByCedula(String cedula){
