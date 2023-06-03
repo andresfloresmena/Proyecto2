@@ -184,6 +184,7 @@ public class Service {
     public List<Cobertura> coberturaPoliza(int poliza) throws Exception{
         return poliCoDao.obtenerCoberturasPorIdPoliza(poliza);
     }
+   
     
      public int findIdPoliza(Poliza poliza) throws Exception{
         return polizaDao.buscarIdPoliza(poliza);

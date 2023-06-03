@@ -85,7 +85,7 @@
                                     <button id="coberturasBtn" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Coberturas</button>
                                 </li>
                                 <li>
-                                    <button id="pagoBtn" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Compra y Pago</button>
+                                    <button id="pagoBtn" onclick="pagoNext()" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Compra y Pago</button>
                                 </li>
                             </ul>
                         </div>
@@ -94,8 +94,8 @@
                             <h1 class="mb-4 text-xl font-semibold">Póliza</h1>
                             <form>
                                 <div class="mb-3">
-                                    <label for="placa" class="block mb-2 font-semibold text-gray-700">Placa:</label>
-                                    <input type="text" class="form-input block w-full px-4 py-2 border rounded-lg" id="placa" name="placa" required>
+                                    <label for="placaAgregar" class="block mb-2 font-semibold text-gray-700">Placa:</label>
+                                    <input type="text" class="form-input block w-full px-4 py-2 border rounded-lg" id="placaAgregar" name="placaAgregar" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="fecha" class="block mb-2 font-semibold text-gray-700">Fecha</label>
@@ -112,7 +112,7 @@
 
                                 <div class="mb-3">
                                     <label for="marcaModelo" class="block mb-2 font-semibold text-gray-700">Marca-Modelo:</label>
-                                    <select class="form-select block w-full px-4 py-2 border rounded-lg" id="marcaModelo" name="marcaModelo" required>
+                                    <select class="form-select block w-full px-4 py-2 border rounded-lg" id="modelo-marca" name="marcaModelo" required>
                                         <option value="">Selecciona una opción</option>
                                         <!-- Aquí debes agregar la lógica para generar las opciones -->
                                     </select>
@@ -149,10 +149,10 @@
 
                         <div id="coberturasContent" class="hidden">
                             <h1 class="mb-4 text-xl font-semibold">Coberturas</h1>
-                            <h2 class="mb-4 text-lg font-semibold">Auto:</h2>
+                            <h2 class="mb-4 text-lg font-semibold"></h2>
                             <form>
                                 <!-- Aquí debes agregar la lógica para generar las categorías y coberturas -->
-                                <button id="pagoNextBtn" type="button" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Siguiente (Pago)</button>
+                                <button id="pagoNextBtn" onclick="pagoNext()" type="button" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Siguiente (Pago)</button>
                             </form>
                         </div>
 
@@ -167,6 +167,10 @@
                                         <tr>
                                             <td class="border px-4 py-2">Cliente</td>
                                             <td class="border px-4 py-2" id="clienteValue"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border px-4 py-2">Modelo de auto</td>
+                                            <td class="border px-4 py-2" id="modeloValue"></td>
                                         </tr>
                                         <tr>
                                             <td class="border px-4 py-2">Fecha de inicio</td>

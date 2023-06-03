@@ -8,6 +8,7 @@ import com.proyecto.segurosbackend.logic.Cliente;
 import com.proyecto.segurosbackend.logic.Poliza;
 import com.proyecto.segurosbackend.logic.Service;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -121,5 +122,30 @@ public class Polizas {
         Response.ResponseBuilder response = Response.ok((Object) file);
         return response.build();
     }
-
+    
+    @GET
+    @Path("/obtenerMarcas")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response obtenerMarcas() {
+        try {
+            // Obtener las categorías desde el servicio
+            return Response.ok(Service.instance().allAutos()).build();
+        } catch (Exception e) {
+            // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las categorías
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/obtenerCategorias")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response obtenerCategorias() {
+        try {
+            // Obtener las categorías desde el servicio
+            return Response.ok(Service.instance().allCategorias()).build();
+        } catch (Exception e) {
+            // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las categorías
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
