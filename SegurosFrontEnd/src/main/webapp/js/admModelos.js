@@ -46,7 +46,6 @@ async function enviarFormularioModelo(event) {
     event.preventDefault();
 
     const marca = document.getElementById('modelo-marca').value;
-    const marcaId = document.getElementById('marca-id').value;
     const nombreModelo = document.getElementById('modelo-nombre').value;
     //const imagenModelo = document.getElementById('modelo-imagen').value;
     const imagenModelo = document.getElementById('modelo-imagen').files[0];
@@ -92,7 +91,7 @@ async function enviarFormularioModelo(event) {
     idModelo = "";
 
 // Enviar la petición
-    fetch(`${backend}/administrador/obtenerIdModelo` + encodeURIComponent(marcaId), params)
+    fetch(`${backend}/administrador/obtenerIdModelo` + encodeURIComponent(marca), params)
             .then(respuestaModelo => response.json())
             .then(respuestaModelo => {
                 idModelo = JSON.stringify(respuestaModelo); // Asigna el valor devuelto a la variable idModelo
