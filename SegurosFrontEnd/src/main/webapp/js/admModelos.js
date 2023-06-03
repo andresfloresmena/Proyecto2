@@ -79,24 +79,33 @@ async function enviarFormularioModelo(event) {
     // Obtener el nombre y la imagen del formulario
 
 
-    let params = {
-        method: 'POST', // tipo de método HTTP
-        headers: {
-            'Content-Type': 'application/json'
-                    // Aquí puedes agregar otros headers como tokens de autorización si son necesarios
-        },
-        body: JSON.stringify(nuevoModelo) // convierte el objeto JavaScript a una cadena JSON
+    let url = `${backend}/administrador/obtenerIdModelo?marcaId=` + encodeURIComponent(marca);
+
+    let modelo = {
+        // Añade aquí los datos del modelo
     };
 
-    idModelo = "";
+    let params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(modelo)
+    };
 
-// Enviar la petición
-    fetch(`${backend}/administrador/obtenerIdModelo` + encodeURIComponent(marca), params)
-            .then(respuestaModelo => response.json())
+    fetch(url, params)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(respuestaModelo => {
-                idModelo = JSON.stringify(respuestaModelo); // Asigna el valor devuelto a la variable idModelo
-            })// este es el id devuelto por el servidor
-            .catch(error => console.error('Error:', error));
+                idModelo = respuestaModelo; // Asigna el valor devuelto a la variable idModelo
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 
 
 // Crear un objeto FormData y agregar los datos
