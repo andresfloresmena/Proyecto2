@@ -46,6 +46,7 @@ async function enviarFormularioModelo(event) {
     event.preventDefault();
 
     const marca = document.getElementById('modelo-marca').value;
+    const marcaId = document.getElementById('marca-id').value;
     const nombreModelo = document.getElementById('modelo-nombre').value;
     //const imagenModelo = document.getElementById('modelo-imagen').value;
     const imagenModelo = document.getElementById('modelo-imagen').files[0];
@@ -79,12 +80,32 @@ async function enviarFormularioModelo(event) {
     // Obtener el nombre y la imagen del formulario
 
 
+    let params = {
+        method: 'POST', // tipo de método HTTP
+        headers: {
+            'Content-Type': 'application/json'
+                    // Aquí puedes agregar otros headers como tokens de autorización si son necesarios
+        },
+        body: JSON.stringify(nuevoModelo) // convierte el objeto JavaScript a una cadena JSON
+    };
+
+    idModelo = "";
+
+// Enviar la petición
+    fetch(`${backend}/administrador/obtenerIdModelo` + encodeURIComponent(marcaId), params)
+            .then(respuestaModelo => response.json())
+            .then(respuestaModelo => {
+                idModelo = JSON.stringify(respuestaModelo); // Asigna el valor devuelto a la variable idModelo
+            })// este es el id devuelto por el servidor
+            .catch(error => console.error('Error:', error));
+
+
 // Crear un objeto FormData y agregar los datos
     const formData = new FormData();
     formData.append('flag', imagenModelo);
 
 // Realizar la solicitud POST utilizando fetch
-    fetch(`${backend}/administrador/${marca}/flag`, {
+    fetch(`${backend}/administrador/${idModelo}/flag`, {
         method: 'POST',
         body: formData
     })
@@ -124,7 +145,7 @@ async function obtenerMarcas() {
             while (selectMarca.firstChild) {
                 selectMarca.removeChild(selectMarca.firstChild);
             }
-            
+
             // Agregar opción por defecto
             const defaultOption = document.createElement('option');
             defaultOption.value = "";
@@ -165,7 +186,7 @@ function renderMarcas(marcas) {
     scrollableDiv.style.width = '100%';  // Adjust as needed
     scrollableDiv.style.height = '500px';  // Adjust as needed
     scrollableDiv.style.overflow = 'auto';  // Enable scrolling when necessary
-    
+
     const marcaTable = document.createElement('table');
     marcaTable.className = 'table-auto w-full text-gray-700 divide-y divide-gray-200';
 
@@ -221,7 +242,7 @@ function renderMarcas(marcas) {
             modeloTableRow.innerHTML = `
         <td class="px-3 py-2 whitespace-no-wrap">${modelo.id}</td>
         <td class="px-3 py-2 whitespace-no-wrap">${modelo.nombre}</td>
-        <td class="px-3 py-2 whitespace-no-wrap"><img class="imagen" src="${backend}/administrador/${marca.id}/imagen" style="width: 50px; height: 50px;"></td>
+        <td class="px-3 py-2 whitespace-no-wrap"><img class="imagen" src="${backend}/administrador/${modelo.id}/imagen" style="width: 50px; height: 50px;"></td>
       `;
             modelosTableBody.appendChild(modeloTableRow);
         }
@@ -242,5 +263,6 @@ function renderMarcas(marcas) {
     scrollableDiv.appendChild(marcaTable);
 
     marcasDiv.appendChild(scrollableDiv);
-};
+}
+;
 

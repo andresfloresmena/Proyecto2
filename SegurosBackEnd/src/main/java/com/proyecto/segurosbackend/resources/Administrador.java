@@ -152,7 +152,7 @@ public class Administrador {
     @Path("{name}/flag")
     @RolesAllowed({"ADM"})
     public void createImage(@PathParam("name") String name, @FormParam("flag") InputStream in) {
-        try {
+        try {   
             OutputStream out = new FileOutputStream(new File(LOCATION + name));
             in.transferTo(out);
             out.close();
@@ -173,5 +173,19 @@ public class Administrador {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    
+   @POST
+    @Path("/obtenerIdModelo")
+    @RolesAllowed({"ADM"})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response obtenerCategorias(@QueryParam("marcaId") String marcaId, Modelo modelo) {
+        try {
+            int marca = Integer.parseInt(marcaId);
+            return Response.ok(Service.instance().codigoModelo(modelo, marca)).build();
+        } catch (Exception e) {
+            // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las categorías
+             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    } 
+    
 }
