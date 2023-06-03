@@ -181,7 +181,7 @@ public class Administrador {
     public Response obtenerCategorias(@QueryParam("marcaId") String marcaId, Modelo modelo) {
         try {
             int marca = Integer.parseInt(marcaId);
-            return Response.ok(Service.instance().codigoModelo(modelo, marca)).build();
+            return Response.ok(String.valueOf(Service.instance().codigoModelo(modelo, marca))).build();
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las categorías
              return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

@@ -79,56 +79,50 @@ async function enviarFormularioModelo(event) {
     // Obtener el nombre y la imagen del formulario
 
 
-    let url = `${backend}/administrador/obtenerIdModelo?marcaId=` + encodeURIComponent(marca);
+    let url = `${backend}/administrador/obtenerIdModelo?marcaId=${marca}`;
 
-    let modelo = {
-        // Añade aquí los datos del modelo
-    };
+    let idModelo = '';
+    try {
+        const response2 = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(nuevoModelo),
+        });
 
-    let params = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(modelo)
-    };
-
-    fetch(url, params)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(respuestaModelo => {
-                idModelo = respuestaModelo; // Asigna el valor devuelto a la variable idModelo
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        if (!response2.ok) {
+            throw new Error('Network response was not ok');
+        } else {
+            idModelo = await response2.json(); // Asigna el valor devuelto a la variable idModelo
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+    ;
 
 
 // Crear un objeto FormData y agregar los datos
     const formData = new FormData();
     formData.append('flag', imagenModelo);
 
+    try {
 // Realizar la solicitud POST utilizando fetch
-    fetch(`${backend}/administrador/${idModelo}/flag`, {
-        method: 'POST',
-        body: formData
-    })
-            .then(response => {
-                if (response.ok) {
-                    // La imagen se cargó exitosamente
-                    console.log('Imagen cargada exitosamente');
-                } else {
-                    // Error al cargar la imagen
-                    console.error('Error al cargar la imagen');
-                }
-            })
-            .catch(error => {
-                console.error('Error al cargar la imagen:', error);
-            });
+        const response3 = await fetch(`${backend}/administrador/${idModelo}/flag`, {
+            method: 'POST',
+            body: formData
+        });
+        if (response3.ok) {
+            // La imagen se cargó exitosamente
+            console.log('Imagen cargada exitosamente');
+        } else {
+            // Error al cargar la imagen
+            console.error('Error al cargar la imagen');
+        }
+    } catch (error) {
+        console.error('Error al cargar la imagen:', error);
+    }
+    ;
 
 
     // Vuelve a obtener y renderizar las marcas después de enviar el formulario
