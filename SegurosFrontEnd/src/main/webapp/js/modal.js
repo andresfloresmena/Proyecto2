@@ -107,6 +107,9 @@ pagoNextBtn.addEventListener('click', () =>{
 });
 
 async function pagoNext() {
+    if(Cobertura.length > 0){
+        Cobertura.splice(0, Cobertura.length);
+    }
     cascaron.style.display = "none";
     if (validateDatos() && validateCoberturas()) {
         const placaValue = document.getElementById('placaAgregar').value;
