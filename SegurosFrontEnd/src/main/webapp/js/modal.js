@@ -1,28 +1,28 @@
 function mostrarModal() {
-  // Obtener el div de la ventana modal
-  let modal = document.getElementById("modal");
-  // Mostrar la ventana modal
-  modal.style.display = "block";
+    // Obtener el div de la ventana modal
+    let modal = document.getElementById("modal");
+    // Mostrar la ventana modal
+    modal.style.display = "block";
 
-  // Mostrar la primera pestaña (Datos básicos)
-  let datosBtn = document.getElementById("datosBtn");
-  let datosContent = document.getElementById("datosContent");
-  datosBtn.classList.add("bg-gray-200", "text-gray-700");
-  datosContent.classList.remove("hidden");
+    // Mostrar la primera pestaña (Datos básicos)
+    let datosBtn = document.getElementById("datosBtn");
+    let datosContent = document.getElementById("datosContent");
+    datosBtn.classList.add("bg-gray-200", "text-gray-700");
+    datosContent.classList.remove("hidden");
 
-  // Ocultar las otras pestañas
-  let coberturasBtn = document.getElementById("coberturasBtn");
-  let pagoBtn = document.getElementById("pagoBtn");
-  let coberturasContent = document.getElementById("coberturasContent");
-  let pagoContent = document.getElementById("pagoContent");
-  coberturasBtn.classList.remove("bg-gray-200", "text-gray-700");
-  pagoBtn.classList.remove("bg-gray-200", "text-gray-700");
-  coberturasContent.classList.add("hidden");
-  pagoContent.classList.add("hidden");
+    // Ocultar las otras pestañas
+    let coberturasBtn = document.getElementById("coberturasBtn");
+    let pagoBtn = document.getElementById("pagoBtn");
+    let coberturasContent = document.getElementById("coberturasContent");
+    let pagoContent = document.getElementById("pagoContent");
+    coberturasBtn.classList.remove("bg-gray-200", "text-gray-700");
+    pagoBtn.classList.remove("bg-gray-200", "text-gray-700");
+    coberturasContent.classList.add("hidden");
+    pagoContent.classList.add("hidden");
 
-  // Oscurecer el fondo detrás del modal
-  let modalOverlay = document.getElementById("modal-overlay");
-  modalOverlay.style.display = "block";
+    // Oscurecer el fondo detrás del modal
+    let modalOverlay = document.getElementById("modal-overlay");
+    modalOverlay.style.display = "block";
 }
 
 
@@ -66,7 +66,10 @@ const pagoContent = document.getElementById('pagoContent');
 const coberturasNextBtn = document.getElementById('coberturasNextBtn');
 const pagoNextBtn = document.getElementById('pagoNextBtn');
 const cascaron = document.getElementById('cascaron');
-cascaron.style.display = "none";
+if (cascaron) {
+    cascaron.style.display = "none";
+}
+
 
 datosBtn.addEventListener('click', () => {
     if (validateDatos()) {
@@ -106,7 +109,7 @@ pagoBtn.addEventListener('click', () => {
         coberturasContent.classList.add('hidden');
         pagoContent.classList.remove('hidden');
         cascaron.style.display = "none";
-    }else {
+    } else {
         alert('Por favor, completa todos los datos y selecciona al menos una cobertura antes de pasar a la siguiente pestaña.');
     }
 });

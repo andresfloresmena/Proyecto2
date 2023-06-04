@@ -336,7 +336,7 @@ if (actualizar !== null) {
     actualizar.addEventListener('click', function (event) {
         event.preventDefault();
         actualizarDatosCliente();
-        });
+    });
 }
 
 // Función para actualizar los datos del cliente
@@ -455,9 +455,11 @@ function esconderFormsAdminMarcas() {
     const admMarcas = document.getElementById('admMarcas');
 
     if (!userGlobal || userGlobal.cedula === '' || userGlobal.usuario.tipo === 1) {
-        // Si no hay usuario logueado, ocultar elementos
-        admMarcas.style.display = 'none';
-        alert('Error: Usuario no logueado');
+        if (admMarcas) {
+            // Verificar si el elemento existe antes de acceder a su propiedad 'style'
+            admMarcas.style.display = 'none';
+            alert("Error: Usuario no logueado")
+        }
     }
 }
 ;
@@ -466,19 +468,24 @@ function esconderFormsAdminClientes() {
     const admClientes = document.getElementById('admClientes');
 
     if (!userGlobal || userGlobal.cedula === '' || userGlobal.usuario.tipo === 1) {
-        admClientes.style.display = 'none';
-        alert('Error: Usuario no logueado');
+        if (admClientes) {
+            // Verificar si el elemento existe antes de acceder a su propiedad 'style'
+            admClientes.style.display = 'none';
+            alert("Error: Usuario no logueado");
+        }
     }
 }
 ;
 
 function esconderFormsAdminCoberturas() {
-    const admCoberturas = document.getElementById('admCoberturas' || userGlobal.usuario.tipo === 1);
+    const admCoberturas = document.getElementById('admCoberturas');
 
-    if (!userGlobal || userGlobal.cedula === '') {
-        // Si no hay usuario logueado, ocultar elementos
-        admCoberturas.style.display = 'none';
-        alert('Error: Usuario no logueado');
+    if (!userGlobal || userGlobal.cedula === '' || userGlobal.usuario.tipo === 1) {
+        if (admCoberturas) {
+            // Verificar si el elemento existe antes de acceder a su propiedad 'style'
+            admCoberturas.style.display = 'none';
+            alert("Error: Usuario no logueado");
+        }
     }
 }
 ;
@@ -488,8 +495,11 @@ function esconderFormsClientePolizas() {
 
     if (!userGlobal || userGlobal.cedula === '') {
         // Si no hay usuario logueado, ocultar elementos
-        cliPolizas.style.display = 'none';
-        alert('Error: Usuario no logueado');
+        if (cliPolizas) {
+            // Verificar si el elemento existe antes de acceder a su propiedad 'style'
+            cliPolizas.style.display = 'none';
+            alert("Error: Usuario no logueado");
+        }
     }
 }
 ;
@@ -498,9 +508,11 @@ function esconderFormsDatos() {
     const actualizacionDatos = document.getElementById('actualizacionDatos');
 
     if (!userGlobal || userGlobal.cedula === '') {
-        // Si no hay usuario logueado, ocultar elementos
-        actualizacionDatos.style.display = 'none';
-        alert('Error: Usuario no logueado');
+        if (actualizacionDatos) {
+            // Verificar si el elemento existe antes de acceder a su propiedad 'style'
+            actualizacionDatos.style.display = 'none';
+            alert("Error: Usuario no logueado");
+        }
     }
 }
 ;
@@ -510,14 +522,36 @@ function esconderMenu() {
 
     if (!userGlobal || userGlobal.cedula === '' || userGlobal.usuario.tipo === 1) {
         // Si no hay usuario logueado, ocultar elementos
-        menu.style.display = 'none';
-        alert('Error: Usuario no logueado');
+        if (menu) {
+            // Verificar si el elemento existe antes de acceder a su propiedad 'style'
+            menu.style.display = 'none';
+            alert("Error: Usuario no logueado");
+        }
     }
 }
 ;
 
-document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
-document.addEventListener('DOMContentLoaded', obtenerPolizas);
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtener la URL actual
+    var url = window.location.href;
+
+    // Verificar si la URL coincide con la página específica
+    if (url.includes("/SegurosFrontEnd/presentation/cliente/datos/View.html")) {
+        obtenerDatosCliente();
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtener la URL actual
+    var url = window.location.href;
+
+    // Verificar si la URL coincide con la página específica
+    if (url.includes("/SegurosFrontEnd/presentation/cliente/polizas/View.html")) {
+        obtenerPolizas();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', obtenerPolizasYCoberturas);
 document.addEventListener('DOMContentLoaded', esconderFormsAdminMarcas);
 document.addEventListener('DOMContentLoaded', esconderFormsAdminClientes);
@@ -528,6 +562,13 @@ document.addEventListener('DOMContentLoaded', esconderMenu);
 document.addEventListener('DOMContentLoaded', ocultarElementosHeader);
 
 const form = document.getElementById('findPolizasForm'); // Asegúrate de reemplazar 'form-id' por el ID de tu formulario
-form.addEventListener('submit', (event) => obtenerPolizasPorPlaca(event, form.placa.value));
+if (form) {
+    form.addEventListener('submit', (event) => obtenerPolizasPorPlaca(event, form.placa.value));
+} else {
+    // Verifica si estás en la página correcta antes de mostrar el mensaje de error
+    if (window.location.pathname === '/ruta-de-la-pagina-correcta') {
+        console.error('El formulario no se encontró en el documento HTML');
+    }
+}
 
 

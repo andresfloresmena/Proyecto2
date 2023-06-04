@@ -71,27 +71,10 @@ CREATE TABLE Cobertura_Poliza (
 alter table Cliente add foreign key (usuario) references Usuario(cedula);
 alter table Poliza add foreign key (cliente) references Cliente(cedula);
 
-
-INSERT INTO Marca (nombre_marca) VALUES ('Toyota');
-INSERT INTO Marca (nombre_marca) VALUES ('Ford');
-
-INSERT INTO Modelo (nombre_modelo, id_marca) VALUES ('Corolla', 1);
-INSERT INTO Modelo (nombre_modelo, id_marca) VALUES ('Camry', 1);
-INSERT INTO Modelo (nombre_modelo, id_marca) VALUES ('Mustang',2);
-INSERT INTO Modelo (nombre_modelo, id_marca) VALUES ('F-150', 2);
-
-
 insert into Usuario (cedula,clave,nombre,telefono,correo,pago,tipo) 
-	values ("333","333","B.Banner","0987654321","bruce.banner@gmail.com","Pago2",2);
-
+	values ("333","333","Administrador","0987654321","admin@gmail.com","N/A",2);
 
 insert into Cliente (cedula,nombre,usuario) 
-	values ("333","B.Banner",'333');
+	values ("333","Administrador",'333');
 
 SET @fecha_inicio = CURDATE();	
-
-insert into Categoria (descripcion) values ('Responsabilidad Civil');
-
-insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daño a Personas', 1000.00, 5.00);
-insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daño a Vehiculos', 1000.00, 5.00);
-insert into Cobertura (categoria_id, descripcion, costo_minimo, costo_porcentual) values (1, 'Daño a Inmuebles', 1000.00, 5.00);
