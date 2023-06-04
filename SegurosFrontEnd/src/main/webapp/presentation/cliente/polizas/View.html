@@ -6,8 +6,8 @@
         <title>Polizas</title>
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-
+        <!-- Agrega este enlace en el head de tu HTML -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
         <link rel="stylesheet" href="/SegurosFrontEnd/css/style.css"/>
     </head>
     <body>
@@ -85,7 +85,7 @@
                                     <button id="coberturasBtn" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Coberturas</button>
                                 </li>
                                 <li>
-                                    <button id="pagoBtn" onclick="pagoNext()" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Compra y Pago</button>
+                                    <button id="pagoBtn" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Compra y Pago</button>
                                 </li>
                             </ul>
                         </div>
@@ -152,13 +152,15 @@
                             <h2 class="mb-4 text-lg font-semibold"></h2>
                             <form>
                                 <!-- Aquí debes agregar la lógica para generar las categorías y coberturas -->
-                                <button id="pagoNextBtn" onclick="pagoNext()" type="button" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Siguiente (Pago)</button>
+
                             </form>
                         </div>
-
+                        <div id="cascaron">
+                            <button id="pagoNextBtn" onclick="pagoNext()" type="button" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition-colors">Siguiente (Pago)</button>
+                        </div>                        
                         <div id="pagoContent" class="hidden">
                             <div class="p-6 border rounded-lg">
-                                <h5 class="text-lg font-semibold mb-2">Pago</h5>
+                                <h5 class="text-lg font-semibold mb-2">Resumen de su compra</h5>
                                 <h6 class="text-gray-700 mb-4">Auto:</h6>
                                 <hr>
                                 <table class="w-full mb-6">
@@ -198,7 +200,7 @@
                                         <!-- Aquí se agregarán las coberturas seleccionadas -->
                                     </tbody>
                                 </table>
-                                <button type="button" class="flex items-center ml-1 px-4 py-2 mt-4 bg-green-500 text-white font-semibold rounded hover:bg-green-700 transition-colors">
+                                <button type="button" onclick="pagar()" class="flex items-center ml-1 px-4 py-2 mt-4 bg-green-500 text-white font-semibold rounded hover:bg-green-700 transition-colors">
 
                                     <span class="mr-1">Pagar</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-fill" viewBox="0 0 16 16">
@@ -214,10 +216,13 @@
 
 
         <div id="footer"></div>
-        <script src="/SegurosFrontEnd/js/includes.js"></script>
-        <script src="/SegurosFrontEnd/js/user.js"></script>
-        <script src="/SegurosFrontEnd/js/modal.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <!-- Agrega este script al final del body de tu HTML -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/decimal.js/10.3.1/decimal.min.js"></script>
+        <script src="/SegurosFrontEnd/js/includes.js"></script>
+        <script src="/SegurosFrontEnd/js/modal.js"></script>
+        <script src="/SegurosFrontEnd/js/user.js"></script>
     </body>
 </html>
 

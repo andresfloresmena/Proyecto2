@@ -35,7 +35,6 @@ let userGlobal = getUserData() || {
 };
 
 async function registrar() {
-    ocultarElementosHeader();
     let id = document.getElementById("id").value;
     let clave = document.getElementById("clave").value;
     let nombre = document.getElementById("nombre").value;
@@ -57,26 +56,30 @@ async function registrar() {
         nombre: nombre,
         usuario: usuario
     };
-    let request = new Request(`${backend}/registrar`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(cliente)
-    });
     try {
-        let response = await fetch(request);
-        if (!response.ok) {
-            errorMessage(response.status);
-            return;
+        const response = await fetch(`${backend}/registrar`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(cliente)
+        });
+        if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Te registraste exitosamente!',
+                text: 'Ahora puedes entrar al sistema con tus credenciales',
+                showConfirmButton: false,
+                timer: 2000 // El alert se cerrará automáticamente después de 2 segundos
+            });
+
+            window.location.href = '/SegurosFrontEnd/presentation/Index.html';
+        } else {
+            console.error('Error');
         }
-        let data = await response.json();
-        console.log('Usuario registrado:', data);
+
     } catch (error) {
         console.error('Error:', error);
     }
 }
-
 async function login() {
     let identificacion = document.getElementById('identificacion').value;
     let clave = document.getElementById('clave').value;
@@ -124,9 +127,9 @@ async function login() {
 
                 const form = document.querySelector('form');
 
-    // Agregar evento de escucha de entrada para el input de identificación
+                // Agregar evento de escucha de entrada para el input de identificación
                 identificacionInput.addEventListener('input', clearErrorMessage);
-    // Agregar evento de escucha de entrada para el input de clave
+                // Agregar evento de escucha de entrada para el input de clave
                 claveInput.addEventListener('input', clearErrorMessage);
 
                 function clearErrorMessage() {
@@ -141,8 +144,8 @@ async function login() {
                 userGlobal = {}; // Limpiar los datos en userGlobal
             }
             // Verificar el tipo de usuario y realizar alguna acción correspondiente
-            
-            
+
+
         } else {
             // Autenticación fallida, mostrar algún mensaje de error
             console.error('Error en el inicio de sesión');
@@ -184,7 +187,7 @@ async function obtenerPolizas() {
                     <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.fechaInicio}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
-                    <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
+                    <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPolizaModelo}/imagen" style="width: 50px; height: 50px;"></td>
                     <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.plazoPago}</td>
                     <td class="border border-gray-300 px-4 py-2"> <a href="/SegurosFrontEnd/presentation/cliente/polizas/Detalles.html?idPoliza=${poliza.idPoliza}"><i class="fas fa-eye"></i></a> </td>
@@ -210,8 +213,9 @@ async function obtenerPolizasPorPlaca(event, placa) {
         const cedula = userGlobal.cedula;
 
         const response = await fetch(`${backend}/polizas/findPoliza?placa=${encodeURIComponent(placa)}&cedula=${encodeURIComponent(cedula)}`, {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'}
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userGlobal)
         });
 
         if (response.ok) {
@@ -227,7 +231,7 @@ async function obtenerPolizasPorPlaca(event, placa) {
                     <td class="border border-gray-300 px-4 py-2">${poliza.placa}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.fechaInicio}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.auto}</td>
-                    <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
+                    <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${poliza.idPolizaModelo}/imagen" style="width: 50px; height: 50px;"></td>
                     <td class="border border-gray-300 px-4 py-2">₡${poliza.costoTotal}</td>
                     <td class="border border-gray-300 px-4 py-2">${poliza.plazoPago}</td>
                    <td class="border border-gray-300 px-4 py-2"> <a href="/SegurosFrontEnd/presentation/cliente/polizas/Detalles.html?idPoliza=${poliza.idPoliza}"><i class="fas fa-eye"></i></a> </td>
@@ -255,8 +259,9 @@ async function obtenerPolizasYCoberturas() {
     try {
 
         const response = await fetch(`${backend}/polizas/findUnaPoliza?idPoliza=${encodeURIComponent(idPoliza)}`, {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'}
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userGlobal)
         });
 
         if (response.ok) {
@@ -268,7 +273,7 @@ async function obtenerPolizasYCoberturas() {
                         <td class="border px-4 py-2">${policy.placa}</td>
                         <td class="border px-4 py-2">${policy.plazoPago}</td>
                         <td class="border px-4 py-2">${policy.auto}</td>
-                        <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${policy.idPoliza}/imagen" style="width: 50px; height: 50px;"></td>
+                        <td class="border border-gray-300 px-4 py-2"><img class="imagen" src="${backend}/polizas/${policy.idPolizaModelo}/imagen" style="width: 50px; height: 50px;"></td>
                         <td class="border px-4 py-2">${policy.annio}</td>
                         <td class="border px-4 py-2">₡${policy.costoTotal}</td>
                     </tr>
@@ -278,8 +283,9 @@ async function obtenerPolizasYCoberturas() {
         }
 
         const coverageResponse = await fetch(`${backend}/polizas/PolizaCobertura?idPoliza=${encodeURIComponent(idPoliza)}`, {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'}
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userGlobal)
         });
 
         if (coverageResponse.ok) {
@@ -333,10 +339,17 @@ async function actualizarDatosCliente() {
         if (!response.ok) {
             errorMessage(response.status);
             return;
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Datos actualizados correctamente!',
+                text: '',
+                showConfirmButton: false,
+                timer: 2000 // El alert se cerrará automáticamente después de 2 segundos
+            });
+            obtenerDatosCliente();
         }
-        let data = await response.json();
-        console.log('Datos del cliente actualizados:', data);
-        obtenerDatosCliente();
+
     } catch (error) {
         console.error('Error:', error);
     }
@@ -367,13 +380,13 @@ function ocultarElementosHeader() {
         datosElement.style.display = 'none';
         logoutElement.style.display = 'none';
         loginElement.style.display = 'block';
-    }else if(userGlobal.usuario.tipo === 2){
+    } else if (userGlobal.usuario.tipo === 2) {
         // Si hay un usuario admin logueado, ocultar elementos del encabezado
         polizasElement.style.display = 'none';
         loginElement.style.display = 'none';
         logoutElement.style.display = 'block';
         datosElement.style.display = 'block';
-    }else if (userGlobal.usuario.tipo === 1){
+    } else if (userGlobal.usuario.tipo === 1) {
         // Si hay un usuario cliente logueado, ocultar elementos del encabezado
         polizasElement.style.display = 'block';
         datosElement.style.display = 'block';
@@ -383,93 +396,99 @@ function ocultarElementosHeader() {
 }
 
 async function logout() {
-  try {
-    
+    try {
 
-    // Enviar una solicitud al servidor para realizar el logout
-    const response = await fetch(`${backend}/login/logout`, {
-      method: 'DELETE'
-    });
 
-    if (response.ok) {
-      const responseText = await response.text();
-      // Desconexión exitosa
-      console.log('Desconexión exitosa:', responseText);
-      // Limpiar localStorage
-    localStorage.clear();
+        // Enviar una solicitud al servidor para realizar el logout
+        const response = await fetch(`${backend}/login/logout`, {
+            method: 'DELETE'
+        });
 
-    // Limpiar los datos en userGlobal
-    userGlobal = {};
+        if (response.ok) {
+            const responseText = await response.text();
+            // Desconexión exitosa
+            console.log('Desconexión exitosa:', responseText);
+            // Limpiar localStorage
+            localStorage.clear();
 
-    // Ocultar elementos del encabezado
-    ocultarElementosHeader();
-    } else {
-      throw new Error('Error al desconectar');
+            // Limpiar los datos en userGlobal
+            userGlobal = {};
+
+            // Ocultar elementos del encabezado
+            ocultarElementosHeader();
+        } else {
+            throw new Error('Error al desconectar');
+        }
+    } catch (error) {
+        // Ocurrió un error durante la desconexión
+        console.error('Error al desconectar:', error);
     }
-  } catch (error) {
-    // Ocurrió un error durante la desconexión
-    console.error('Error al desconectar:', error);
-  }
 }
 
-function esconderFormsAdminMarcas(){
+function esconderFormsAdminMarcas() {
     const admMarcas = document.getElementById('admMarcas');
-    
-    if (!userGlobal || userGlobal.cedula === '') {
+
+    if (!userGlobal || userGlobal.cedula === '' || userGlobal.usuario.tipo === 1) {
         // Si no hay usuario logueado, ocultar elementos
         admMarcas.style.display = 'none';
         alert('Error: Usuario no logueado');
     }
-};
+}
+;
 
-function esconderFormsAdminClientes(){
+function esconderFormsAdminClientes() {
     const admClientes = document.getElementById('admClientes');
-    
-    if (!userGlobal || userGlobal.cedula === '') {
+
+    if (!userGlobal || userGlobal.cedula === '' || userGlobal.usuario.tipo === 1) {
         admClientes.style.display = 'none';
         alert('Error: Usuario no logueado');
     }
-};
+}
+;
 
-function esconderFormsAdminCoberturas(){
-    const admCoberturas = document.getElementById('admCoberturas');
-    
+function esconderFormsAdminCoberturas() {
+    const admCoberturas = document.getElementById('admCoberturas' || userGlobal.usuario.tipo === 1);
+
     if (!userGlobal || userGlobal.cedula === '') {
         // Si no hay usuario logueado, ocultar elementos
         admCoberturas.style.display = 'none';
         alert('Error: Usuario no logueado');
     }
-};
+}
+;
 
-function esconderFormsClientePolizas(){
+function esconderFormsClientePolizas() {
     const cliPolizas = document.getElementById('cliPolizas');
-    
+
     if (!userGlobal || userGlobal.cedula === '') {
         // Si no hay usuario logueado, ocultar elementos
         cliPolizas.style.display = 'none';
         alert('Error: Usuario no logueado');
     }
-};
+}
+;
 
-function esconderFormsDatos(){
+function esconderFormsDatos() {
     const actualizacionDatos = document.getElementById('actualizacionDatos');
-    
+
     if (!userGlobal || userGlobal.cedula === '') {
         // Si no hay usuario logueado, ocultar elementos
         actualizacionDatos.style.display = 'none';
         alert('Error: Usuario no logueado');
     }
-};
+}
+;
 
-function esconderMenu(){
+function esconderMenu() {
     const menu = document.getElementById('menu');
-    
-    if (!userGlobal || userGlobal.cedula === '') {
+
+    if (!userGlobal || userGlobal.cedula === '' || userGlobal.usuario.tipo === 1) {
         // Si no hay usuario logueado, ocultar elementos
         menu.style.display = 'none';
         alert('Error: Usuario no logueado');
     }
-};
+}
+;
 
 document.addEventListener('DOMContentLoaded', obtenerDatosCliente);
 document.addEventListener('DOMContentLoaded', obtenerPolizas);

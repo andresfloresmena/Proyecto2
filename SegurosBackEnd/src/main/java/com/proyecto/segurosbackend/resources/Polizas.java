@@ -5,10 +5,10 @@
 package com.proyecto.segurosbackend.resources;
 
 import com.proyecto.segurosbackend.logic.Cliente;
+import com.proyecto.segurosbackend.logic.Cobertura;
 import com.proyecto.segurosbackend.logic.Poliza;
 import com.proyecto.segurosbackend.logic.Service;
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -22,6 +22,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,13 +48,12 @@ public class Polizas {
         }
     }
 
-    @GET
+    @POST
     @Path("/findPoliza")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerPolizas(@QueryParam("placa") String placa, @QueryParam("cedula") String cedula) {
+    public Response obtenerPolizas(@QueryParam("placa") String placa, @QueryParam("cedula") String cedula, Cliente cliente) {
         try {
-            Cliente cliente = (Cliente) request.getSession().getAttribute("user");
-            List<Poliza> polizas = cliente.getPolizas();
+            List<Poliza> polizas = Service.instance().polizaFindByUsuario(cliente.getUsuario());
             for (Poliza poliza : polizas) {
                 if (poliza.getPlaca().equals(placa) && cliente.getCedula().equals(cedula)) {
                     return Response.ok(Service.instance().polizaFindByPlaca(placa, cedula)).build();
@@ -68,13 +68,12 @@ public class Polizas {
         }
     }
 
-    @GET
+    @POST
     @Path("/findUnaPoliza")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerUnaPoliza(@QueryParam("idPoliza") String id) {
+    public Response obtenerUnaPoliza(@QueryParam("idPoliza") String id, Cliente cliente) {
         try {
-            Cliente cliente = (Cliente) request.getSession().getAttribute("user");
-            List<Poliza> polizas = cliente.getPolizas();
+            List<Poliza> polizas = Service.instance().polizaFindByUsuario(cliente.getUsuario());
             int value = Integer.parseInt(id);
             for (Poliza poliza : polizas) {
                 if (poliza.getIdPoliza() == value) {
@@ -90,13 +89,12 @@ public class Polizas {
         }
     }
 
-    @GET
+    @POST
     @Path("/PolizaCobertura")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerPolizaCobertura(@QueryParam("idPoliza") String idPoliza) {
+    public Response obtenerPolizaCobertura(@QueryParam("idPoliza") String idPoliza, Cliente cliente) {
         try {
-            Cliente cliente = (Cliente) request.getSession().getAttribute("user");
-            List<Poliza> polizas = cliente.getPolizas();
+            List<Poliza> polizas = Service.instance().polizaFindByUsuario(cliente.getUsuario());
             int value = Integer.parseInt(idPoliza);
             for (Poliza poliza : polizas) {
                 if (poliza.getIdPoliza() == value) {
@@ -122,7 +120,7 @@ public class Polizas {
         Response.ResponseBuilder response = Response.ok((Object) file);
         return response.build();
     }
-    
+
     @GET
     @Path("/obtenerMarcas")
     @Consumes({MediaType.APPLICATION_JSON})
@@ -135,7 +133,7 @@ public class Polizas {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @GET
     @Path("/obtenerCategorias")
     @Consumes({MediaType.APPLICATION_JSON})
@@ -143,6 +141,26 @@ public class Polizas {
         try {
             // Obtener las categorías desde el servicio
             return Response.ok(Service.instance().allCategorias()).build();
+        } catch (Exception e) {
+            // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las categorías
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @POST
+    @Path("/pagar")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response comprarCobertura(Poliza poliza) {
+        try {
+            Service.instance().agregarPoliza(poliza);
+            int idPoliza = Service.instance().findIdPoliza(poliza);
+            List<Integer> idCoberturas = new ArrayList<>();
+            for (Cobertura cobertura : poliza.getCobertura()) {
+                idCoberturas.add(cobertura.getId());
+            }
+            Service.instance().unirPolizaCobertura(idPoliza, idCoberturas);
+            return Response.ok().build();
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante la obtención de las categorías
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

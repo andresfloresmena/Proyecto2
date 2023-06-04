@@ -19,7 +19,7 @@ public class Registrar {
     public Response agregarCliente(Cliente cliente) throws Exception { 
          try {
             Service.instance().agregarCliente(cliente);
-            return Response.ok(cliente).build();
+            return Response.ok().build();
         } catch (Exception e) {
             // Manejar cualquier excepción o error que pueda ocurrir durante el registro
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error al registrar el cliente").build();

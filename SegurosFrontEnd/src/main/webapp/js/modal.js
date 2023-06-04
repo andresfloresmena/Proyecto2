@@ -40,6 +40,8 @@ const coberturasContent = document.getElementById('coberturasContent');
 const pagoContent = document.getElementById('pagoContent');
 const coberturasNextBtn = document.getElementById('coberturasNextBtn');
 const pagoNextBtn = document.getElementById('pagoNextBtn');
+const cascaron = document.getElementById('cascaron');
+cascaron.style.display = "none";
 
 datosBtn.addEventListener('click', () => {
     if (validateDatos()) {
@@ -49,6 +51,7 @@ datosBtn.addEventListener('click', () => {
         datosContent.classList.remove('hidden');
         coberturasContent.classList.add('hidden');
         pagoContent.classList.add('hidden');
+        cascaron.style.display = "none";
     } else {
         alert('Por favor, completa todos los datos antes de pasar a la siguiente pestaña.');
     }
@@ -62,21 +65,24 @@ coberturasBtn.addEventListener('click', () => {
         datosContent.classList.add('hidden');
         coberturasContent.classList.remove('hidden');
         pagoContent.classList.add('hidden');
+        cascaron.style.display = "block";
     } else {
         alert('Por favor, completa todos los datos antes de pasar a la siguiente pestaña.');
     }
 });
 
 pagoBtn.addEventListener('click', () => {
-    if (validateDatos()) {
+    if (validateDatos() && validateCoberturas()) {
+        pagoNext();
         datosBtn.classList.remove('bg-gray-200', 'text-gray-700');
         coberturasBtn.classList.remove('bg-gray-200', 'text-gray-700');
         pagoBtn.classList.add('bg-gray-200', 'text-gray-700');
         datosContent.classList.add('hidden');
         coberturasContent.classList.add('hidden');
         pagoContent.classList.remove('hidden');
-    } else {
-        alert('Por favor, completa todos los datos antes de pasar a la siguiente pestaña.');
+        cascaron.style.display = "none";
+    }else {
+        alert('Por favor, completa todos los datos y selecciona al menos una cobertura antes de pasar a la siguiente pestaña.');
     }
 });
 
@@ -88,15 +94,25 @@ coberturasNextBtn.addEventListener('click', () => {
         datosContent.classList.add('hidden');
         coberturasContent.classList.remove('hidden');
         pagoContent.classList.add('hidden');
+        cascaron.style.display = "block";
     } else {
         alert('Por favor, completa todos los datos antes de pasar a la siguiente pestaña.');
     }
 });
 
+const Cobertura = [];
+
+pagoNextBtn.addEventListener('click', () =>{
+    pagoNext();
+});
+
 async function pagoNext() {
+    cascaron.style.display = "none";
     if (validateDatos() && validateCoberturas()) {
         const placaValue = document.getElementById('placaAgregar').value;
-        const marcaModeloValue = document.getElementById('modelo-marca').value;
+        const selectElement = document.getElementById('modelo-marca');
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const marcaModeloText = selectedOption.text;
         const añoValue = document.getElementById('annio').value;
         const valorValue = document.getElementById('valor').value;
         const fechaValue = document.getElementById('fecha').value;
@@ -111,7 +127,7 @@ async function pagoNext() {
 
         autoElement.textContent = `Placa: ${placaValue}`;
         clienteElement.textContent = `${userGlobal.nombre}`; // Aquí debes obtener el valor del cliente seleccionado
-        modeloElement.textContent = `${marcaModeloValue}`;
+        modeloElement.textContent = `${marcaModeloText}`;
         fechaInicioElement.textContent = `${fechaValue}`; // Aquí debes obtener la fecha de inicio
         plazoPagoElement.textContent = `${modoPagoValue}`; // Aquí debes obtener el plazo de pago
         costoTotalElement.textContent = `₡${valorValue}`; // Aquí debes obtener el costo total
@@ -129,6 +145,7 @@ async function pagoNext() {
             for (const categoria of categorias) {
                 for (const cobertura of categoria.coberturas) {
                     if (cobertura.descripcion === coberturaDescripcion) {
+                        Cobertura.push(cobertura);
                         const row = document.createElement('tr');
                         const descripcionCell = document.createElement('td');
                         const costoCell = document.createElement('td');
@@ -137,7 +154,7 @@ async function pagoNext() {
                         costoCell.classList.add('border', 'px-4', 'py-2');
 
                         descripcionCell.textContent = coberturaDescripcion;
-                        costoCell.textContent = "₡"+cobertura.costoMinimo; // Aquí debes obtener el costo mínimo de la cobertura
+                        costoCell.textContent = "₡" + cobertura.costoMinimo; // Aquí debes obtener el costo mínimo de la cobertura
 
                         row.appendChild(descripcionCell);
                         row.appendChild(costoCell);
@@ -180,10 +197,55 @@ document.addEventListener("DOMContentLoaded", function () {
     flatpickr("#fecha", {
         dateFormat: "Y-m-d", // Formato de fecha (Año-Mes-Día)
         allowInput: true, // Permite la entrada manual
-        clickOpens: true, // Abre el calendario al hacer clic en el campo
+        clickOpens: true // Abre el calendario al hacer clic en el campo
     });
 });
 
+
+async function pagar() {
+    const placaValue = document.getElementById('placaAgregar').value;
+    const marcaModeloValue = document.getElementById('modelo-marca').value;
+    const selectElement = document.getElementById('modelo-marca');
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const marcaModeloText = selectedOption.text;
+    const añoValue = document.getElementById('annio').value;
+    const valorValue = document.getElementById('valor').value;
+    const fechaValue = document.getElementById('fecha').value;
+    const modoPagoValue = document.querySelector('input[name="modoPago"]:checked').value;
+
+    let poliza = {
+        idPoliza: 0,
+        placa: placaValue,
+        fechaInicio: fechaValue,
+        plazoPago: modoPagoValue,
+        auto: marcaModeloText,
+        annio: añoValue,
+        costoTotal: valorValue, // Ten en cuenta que JavaScript no tiene un tipo de dato BigDecimal incorporado, tendrías que usar una biblioteca externa o implementar tu propia lógica para trabajar con números decimales de alta precisión.
+        cliente: userGlobal,
+        cobertura: Cobertura,
+        idPolizaModelo: marcaModeloValue
+    };
+
+    const response = await fetch(`${backend}/polizas/pagar`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(poliza)
+    });
+
+    if (response.ok) {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Tu compra fue exitosa!',
+            text: 'Gracias por tu compra',
+            showConfirmButton: false,
+            timer: 2000 // El alert se cerrará automáticamente después de 2 segundos
+        });
+        obtenerPolizas();
+        closeModal();
+    } else {
+        console.log("Error");
+    }
+}
 
 async function obtenerMarcas() {
     try {
@@ -212,7 +274,7 @@ async function obtenerMarcas() {
 
                 for (const modelo of marca.modelos) {
                     const option = document.createElement('option');
-                    option.value = modelo.nombre;
+                    option.value = modelo.id;
                     option.text = modelo.nombre;
                     optionGroup.appendChild(option);
                 }
@@ -278,14 +340,6 @@ async function obtenerCategorias() {
                 coberturasContent.appendChild(categoryTitle);
                 coberturasContent.appendChild(form);
             }
-
-            const nextButton = document.createElement('button');
-            nextButton.id = 'pagoNextBtn';
-            nextButton.type = 'button';
-            nextButton.classList.add('px-4', 'py-2', 'bg-blue-500', 'text-white', 'font-semibold', 'rounded', 'hover:bg-blue-700', 'transition-colors');
-            nextButton.textContent = 'Siguiente (Pago)';
-
-            coberturasContent.appendChild(nextButton);
         } else {
             console.error('Error al obtener las categorías');
         }
