@@ -25,6 +25,13 @@ async function enviarFormularioMarca(event) {
         });
 
         if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Marca agregada exitosamente!',
+                text: '',
+                showConfirmButton: false,
+                timer: 2000 // El alert se cerrará automáticamente después de 2 segundos
+            });
             // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
             console.log('Formulario de marca enviado exitosamente');
         } else {
@@ -66,6 +73,13 @@ async function enviarFormularioModelo(event) {
 
 
         if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Modelo agregado exitosamente!',
+                text: '',
+                showConfirmButton: false,
+                timer: 2000 // El alert se cerrará automáticamente después de 2 segundos
+            });
             // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
             console.log('Formulario de modelo enviado exitosamente');
         } else {
@@ -127,6 +141,9 @@ async function enviarFormularioModelo(event) {
 
     // Vuelve a obtener y renderizar las marcas después de enviar el formulario
     fetchMarcas().then(renderMarcas);
+    document.getElementById('modelo-marca').value = '';
+    document.getElementById('modelo-nombre').value = '';
+    document.getElementById('modelo-imagen').files[0];
 }
 
 // Asignar los eventos de envío de formulario

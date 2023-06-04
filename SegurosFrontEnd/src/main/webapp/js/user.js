@@ -34,6 +34,23 @@ let userGlobal = getUserData() || {
     polizas: []
 };
 
+
+const registro = document.getElementById('registrar');
+
+if (registro !== null) {
+    registro.addEventListener('click', function (event) {
+        event.preventDefault();
+        registrar();
+        document.getElementById("id").value = '';
+        document.getElementById("clave").value = '';
+        document.getElementById("nombre").value = '';
+        document.getElementById("telefono").value = '';
+        document.getElementById("correo").value = '';
+        document.getElementById("tarjeta").value = '';
+        document.getElementById("checkbox-politicas").checked = false;
+    });
+}
+
 async function registrar() {
     let id = document.getElementById("id").value;
     let clave = document.getElementById("clave").value;
@@ -71,7 +88,7 @@ async function registrar() {
                 timer: 2000 // El alert se cerrará automáticamente después de 2 segundos
             });
 
-            window.location.href = '/SegurosFrontEnd/presentation/Index.html';
+
         } else {
             console.error('Error');
         }
@@ -80,6 +97,8 @@ async function registrar() {
         console.error('Error:', error);
     }
 }
+
+
 async function login() {
     let identificacion = document.getElementById('identificacion').value;
     let clave = document.getElementById('clave').value;
@@ -312,6 +331,13 @@ async function obtenerPolizasYCoberturas() {
 
 }
 
+const actualizar = document.getElementById('actualizar');
+if (actualizar !== null) {
+    actualizar.addEventListener('click', function (event) {
+        event.preventDefault();
+        actualizarDatosCliente();
+        });
+}
 
 // Función para actualizar los datos del cliente
 async function actualizarDatosCliente() {
@@ -499,6 +525,7 @@ document.addEventListener('DOMContentLoaded', esconderFormsAdminCoberturas);
 document.addEventListener('DOMContentLoaded', esconderFormsClientePolizas);
 document.addEventListener('DOMContentLoaded', esconderFormsDatos);
 document.addEventListener('DOMContentLoaded', esconderMenu);
+document.addEventListener('DOMContentLoaded', ocultarElementosHeader);
 
 const form = document.getElementById('findPolizasForm'); // Asegúrate de reemplazar 'form-id' por el ID de tu formulario
 form.addEventListener('submit', (event) => obtenerPolizasPorPlaca(event, form.placa.value));

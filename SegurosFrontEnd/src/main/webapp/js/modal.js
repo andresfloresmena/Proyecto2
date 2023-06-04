@@ -200,6 +200,7 @@ async function pagoNext() {
         coberturasContent.classList.add('hidden');
         pagoContent.classList.remove('hidden');
     } else {
+        cascaron.style.display = "block";
         alert('Por favor, completa todos los datos y selecciona al menos una cobertura antes de pasar a la siguiente pestaña.');
     }
 }

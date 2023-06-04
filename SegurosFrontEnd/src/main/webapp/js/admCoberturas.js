@@ -141,6 +141,13 @@ async function enviarFormularioCategoria(event) {
         });
 
         if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Categoria agregada exitosamente!',
+                text: '',
+                showConfirmButton: false,
+                timer: 2000 // El alert se cerrará automáticamente después de 2 segundos
+            });
             // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
             console.log('Formulario de categoría enviado exitosamente');
         } else {
@@ -185,6 +192,13 @@ async function enviarFormularioCobertura(event) {
 
 
         if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Cobertura agregada exitosamente!',
+                text: '',
+                showConfirmButton: false,
+                timer: 2000 // El alert se cerrará automáticamente después de 2 segundos
+            });
             // El formulario se envió exitosamente, puedes realizar alguna acción adicional si deseas
             console.log('Formulario de cobertura enviado exitosamente');
         } else {
