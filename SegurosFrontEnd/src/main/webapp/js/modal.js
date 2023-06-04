@@ -1,24 +1,36 @@
 function mostrarModal() {
-    // Obtener el div de la ventana modal
-    let modal = document.getElementById("modal");
-    // Mostrar la ventana modal
-    modal.style.display = "block";
+  // Obtener el div de la ventana modal
+  let modal = document.getElementById("modal");
+  // Mostrar la ventana modal
+  modal.style.display = "block";
 
-    // Oscurecer el fondo detrás del modal
-    let modalOverlay = document.getElementById("modal-overlay");
-    modalOverlay.style.display = "block";
+  // Mostrar la primera pestaña (Datos básicos)
+  let datosBtn = document.getElementById("datosBtn");
+  let datosContent = document.getElementById("datosContent");
+  datosBtn.classList.add("bg-gray-200", "text-gray-700");
+  datosContent.classList.remove("hidden");
+
+  // Ocultar las otras pestañas
+  let coberturasBtn = document.getElementById("coberturasBtn");
+  let pagoBtn = document.getElementById("pagoBtn");
+  let coberturasContent = document.getElementById("coberturasContent");
+  let pagoContent = document.getElementById("pagoContent");
+  coberturasBtn.classList.remove("bg-gray-200", "text-gray-700");
+  pagoBtn.classList.remove("bg-gray-200", "text-gray-700");
+  coberturasContent.classList.add("hidden");
+  pagoContent.classList.add("hidden");
+
+  // Oscurecer el fondo detrás del modal
+  let modalOverlay = document.getElementById("modal-overlay");
+  modalOverlay.style.display = "block";
 }
+
 
 function closeModal() {
     // Obtener el elemento modal
     const modal = document.getElementById("modal");
 
-    // Ocultar el modal
-    modal.style.display = "none";
 
-    // Restaurar el fondo detrás del modal
-    let modalOverlay = document.getElementById("modal-overlay");
-    modalOverlay.style.display = "none";
 
     // Restablecer los valores de los campos de entrada a blanco
     const inputs = modal.querySelectorAll("input, select");
@@ -29,6 +41,19 @@ function closeModal() {
             input.value = ""; // Establecer el valor del campo en blanco
         }
     });
+
+    // Restablecer el contenido de los elementos <td> a blanco
+    const tds = modal.querySelectorAll("td");
+    tds.forEach((td) => {
+        td.textContent = "";
+    });
+
+    // Ocultar el modal
+    modal.style.display = "none";
+
+    // Restaurar el fondo detrás del modal
+    let modalOverlay = document.getElementById("modal-overlay");
+    modalOverlay.style.display = "none";
 }
 
 
@@ -102,12 +127,12 @@ coberturasNextBtn.addEventListener('click', () => {
 
 const Cobertura = [];
 
-pagoNextBtn.addEventListener('click', () =>{
+pagoNextBtn.addEventListener('click', () => {
     pagoNext();
 });
 
 async function pagoNext() {
-    if(Cobertura.length > 0){
+    if (Cobertura.length > 0) {
         Cobertura.splice(0, Cobertura.length);
     }
     cascaron.style.display = "none";
